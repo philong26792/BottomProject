@@ -1,0 +1,104 @@
+<div class="animated fadeIn">
+  <div class="row">
+      <div class="col-md-12">
+          <div class="card">
+              <div class="card-header">
+                  <strong>2.1.1 Receiving Mat# A - Add</strong>
+                  <button type="button" (click)="backForm()" class="btn btn-sm btn-primary float-right"><i
+                          class="fa fa-chevron-left"></i>
+                      Back</button>
+              </div>
+              <div class="card-body">
+                  <div class="form-group row">
+                      <label class="col-md-2 col-form-label" for="Receive No"><strong class="float-right">Delivery
+                              Type</strong></label>
+                      <div class="col-md-3">
+                          <select (change)="changeForm()" class="form-control" [(ngModel)]="type" id="status"
+                              name="status">
+                              <option value="No Batch">No Batch</option>
+                              <option value="Batches">Batches</option>
+                          </select>
+                      </div>
+                      <label class="col-md-2 col-form-label" for="Delivery No"><strong class="float-right">Delivery
+                              No</strong></label>
+                      <div class="col-md-3">
+                          <input type="text" name="Delivery No" class="form-control" [(ngModel)]="delivery_No">
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-md-10 offset-md-1 table-responsive">
+                          <table class="table table-bordered">
+                              <thead>
+                                  <tr class="text-center">
+                                    <th colspan="2">Tool Size</th>
+                                    <th *ngFor="let item of materialMerging"> {{item.tool_Size}}</th>
+                                  </tr>
+                                  <tr class="text-center">
+                                    <th colspan="2">PO#Size</th>
+                                    <th *ngFor="let item of materialMerging"> {{item.order_Size}}</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr class="text-center">
+                                      <td>Purchase Qty</td>
+                                      <td *ngIf="listTotalQty !== undefined && listTotalQty !== null">{{listTotalQty.totalPurchaseQty}}</td>
+                                      <td *ngFor="let item of materialMerging">
+                                        {{item.purchase_Qty}}
+                                      </td>
+                                    </tr>
+                                    <tr class="text-center">
+                                      <td>Accumated Qty</td>
+                                      <td *ngIf="listTotalQty !== undefined && listTotalQty !== null">{{listTotalQty.totalAccumated_Qty}}</td>
+                                      <td *ngFor="let item of materialMerging">{{item.accumlated_In_Qty}}</td>
+                                    </tr>
+                                    <tr class="text-center">
+                                      <td>Delivery Qty</td>
+                                      <td *ngIf="listTotalQty !== undefined && listTotalQty !== null">{{deliveryQtyTotal}}</td>
+                                      <td *ngFor="let item of materialMerging">
+                                        <input
+                                        [(ngModel)]="item.delivery_Qty_Batches"
+                                        type="text" id="{{item.order_Size}}" disabled class="input-table">
+                                      </td>
+                                    </tr>
+                                    <tr *ngFor="let item of orderSizeByBatch; let i1 = index" class="text-center">
+                                      <td>
+                                        <div style="display: flex;">
+                                          <button class="btn btn-pill btn-block btn-secondary" 
+                                              [disabled]="item.isEdit" 
+                                              (click)="showInput(item, i1)">Edit</button>
+                                        </div>
+                                        <span *ngIf="item.mO_Seq !== ''; else elseContent" style="padding-left: 25px;">
+                                          {{item.mO_Seq}}
+                                        </span>
+                                        <ng-template #elseContent>No Batch</ng-template>
+                                      </td>
+                                      <ng-container *ngFor="let itemTotal of totalByBatch">
+                                        <ng-container *ngIf="itemTotal.mO_Seq === item.mO_Seq">
+                                          <td>{{itemTotal.total}}</td>
+                                        </ng-container>
+                                      </ng-container>
+                                      <td *ngFor="let item1 of item.purchase_Qty; let i2 = index">
+                                        <input min="0" max={{item1.purchase_Qty_Const}} 
+                                                      [(ngModel)]="item1.purchase_Qty" 
+                                                      (change)="changeInput(item1,i2)" (keyup)="changeInput(item1,i2)"
+                                                      type="number" [disabled] = "!item.isEdit"  
+                                                      class="input-table">
+                                    </td>
+                                    </tr>
+                                </tbody>
+                          </table>
+                      </div>
+                  </div>
+              </div>
+              <div class="card-footer">
+                  <button type="button" *ngIf="checkSubmit === false; else elseSubmit" (click)="submitData()" class="btn btn-success"><i
+                      class="fa fa-check"></i> Save</button>
+                  <ng-template #elseSubmit>
+                    <button type="button" disabled class="btn btn-success"><i
+                      class="fa fa-check"></i> Save</button>
+                  </ng-template>
+                </div>
+          </div>
+      </div>
+  </div>
+</div>

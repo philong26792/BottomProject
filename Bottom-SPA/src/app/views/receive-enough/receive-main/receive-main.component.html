@@ -1,0 +1,142 @@
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <strong>2.1.2 Receiving Mat# B</strong>
+                </div>
+                <form class="form-horizontal" #addAuditTypeForm="ngForm">
+                    <div class="card-body">
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label" for="fromDate"><strong class="float-right">Transfer
+                                    Date</strong></label>
+                            <div class="col-md-2">
+                                <div class="input-group">
+                                    <input type="text" placeholder="Start" id="fromDate" class="form-control"
+                                        bsDatepicker [(ngModel)]="time_start" name="time_start" [bsConfig]="bsConfig">
+                                    <span class="input-group-append">
+                                        <button class="btn btn-primary" type="button" disabled><i
+                                                class="fa fa-calendar"></i></button>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="input-group">
+                                    <input type="text" placeholder="End" class="form-control" bsDatepicker
+                                        [(ngModel)]="time_end" name="time_end" [bsConfig]="bsConfig">
+                                    <span class="input-group-append">
+                                        <button class="btn btn-primary" type="button" disabled><i
+                                                class="fa fa-calendar"></i></button>
+                                    </span>
+                                </div>
+                            </div>
+                            <label class="col-md-2 col-form-label" for="Plan_No"><strong class="float-right">Transfer No
+                                </strong></label>
+                            <div class="col-md-2">
+                                <input type="text" name="transfer_no" [(ngModel)]="purchase_No"
+                                    placeholder="Enter Transfer No" class="form-control">
+                            </div>
+                            <div class="col-md-2"></div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label" for="plan_no"><strong class="float-right">Plan No</strong></label>
+                            <div class="col-md-2">
+                                <input type="text" name="mO_No" [(ngModel)]="mO_No"
+                                    placeholder="Enter Plan No" class="form-control">
+                            </div>
+                            <label class="col-md-2 col-form-label" for="status"><strong
+                                    class="float-right">Status</strong></label>
+                            <div class="col-md-2">
+                                <select class="form-control" [(ngModel)]="status" id="status" name="status">
+                                    <option value="all">All</option>
+                                    <option value="Y">Closed</option>
+                                    <option value="N">Not Closed</option>
+                                </select>
+                            </div>
+                            <!-- <div class="col-md-4">
+
+                            </div> -->
+                            <div class="col-md-2">
+                                <button type="button" class="btn btn-success btn-block" (click)="search()"><i
+                                        class="fa fa-search"></i>
+                                    Search</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th><input [(ngModel)]="checkboxAll" (change)="checkAll($event)" type="checkbox" id="all" /></th>
+                                <th>Close</th>
+                                <th>Plan No</th>
+                                <th>Tranfer No</th>
+                                <th>Model No</th>
+                                <th>Model Name</th>
+                                <th>Aricle#</th>
+                                <th>Supplier No</th>
+                                <th>Supplier Name</th>
+                                <th>Qty</th>
+                            </tr>
+                        </thead>
+                        <tbody *ngIf="materialLists.length === 0">
+                            <tr>
+                                <td colspan="10">
+                                  <alert class="text-center" type='danger'>
+                                    <strong>No Data Found!</strong> 
+                                  </alert>
+                                </td>
+                              </tr>
+                        </tbody>
+                        <tbody>
+                            <ng-container *ngFor="let item of materialLists; let index = index">
+                                <tr>
+                                    <td *ngIf="item.status === 'N';else elseStatus" rowspan="2">
+                                        <input  type="checkbox" 
+                                                [(ngModel)]="item.checkInput" 
+                                                name="checkbox" />
+                                    </td>
+                                    <ng-template #elseStatus>
+                                        <td rowspan="2"></td>
+                                    </ng-template>
+                                    <td rowspan="2">{{item.status}}</td>
+                                    <td rowspan="2">{{item.mO_No}}</td>
+                                    <td>{{item.purchase_No}}</td>
+                                    <td>{{item.model_No}}</td>
+                                    <td>{{item.model_Name}}</td>
+                                    <td>{{item.article}}</td>
+                                    <td>{{item.supplier_ID}}</td>
+                                    <td>{{item.supplier_Name}}</td>
+                                    <td>{{item.qty}}</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="7">{{item.material_ID}}-{{item.material_Name.trim()}}</td>
+                                </tr>
+                            </ng-container>
+                        </tbody>
+                    </table>
+                    <div class="d-flex">
+                        <pagination *ngIf="materialLists.length > 0" [boundaryLinks]="true" [totalItems]="pagination.totalItems" [(ngModel)]="pagination.currentPage"
+                        [itemsPerPage]="pagination.itemsPerPage" (pageChanged)="pageChanged($event)" previousText="&lsaquo;"
+                        nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;" [maxSize]=5>
+                        </pagination>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button (click)="cancle()" class="btn btn-danger mr-2"><i class="fa fa-ban"></i> Cancel</button>
+                    <button *ngIf="isShowSubmit === true;else elseSubmit" (click)="submit()" class="btn btn-success mr-2"><i class="fa fa-check"></i> Submit</button>
+                    <ng-template #elseSubmit>
+                        <button disabled class="btn btn-success mr-2"><i class="fa fa-check"></i> Submit</button>
+                    </ng-template>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,16 @@
+.input-table {
+    width: 50px;
+}
+
+td:nth-child(1) {  
+  background-color: #20a8d8;
+    color: #fff;
+    font-size: 1rem;
+}
+input[type=number] {
+  height: 50px;
+}
+
+input[type=number]::-webkit-inner-spin-button {
+  height: 50px;
+}

@@ -1,0 +1,62 @@
+td {
+  width: 70px;
+}
+// .print-all {
+//     height: 1530px;
+//  }
+.margin-row-print {
+  margin-right: 5px;
+  margin-left: 5px;
+}
+.div-hidden {
+  display: none;
+}
+.btn-print {
+  margin-left: 5px;
+}
+.text-margin1 {
+  margin-left: 20px;
+}
+span,
+td {
+  font-size: 23px;
+  font-weight: 700;
+}
+.hr-margin {
+  margin-top: 2px;
+  margin-bottom: 2px;
+}
+.margin-tr {
+  height: 60px;
+}
+tr td {
+  width: 145px;
+}
+.table3 tr td {
+  width: 100px !important;
+}
+.sugges {
+  margin-left: 13px;
+}
+
+@media print {
+  body {
+    display: table;
+    table-layout: fixed;
+    padding-top: 2.5cm;
+    padding-bottom: 2.5cm;
+    height: auto;
+    font-size: 12pt;
+  }
+}
+
+@media all {
+  // .print-all{ display: none; }
+}
+
+@media print {
+  .print-all {
+    display: block;
+    page-break-before: always;
+  }
+}

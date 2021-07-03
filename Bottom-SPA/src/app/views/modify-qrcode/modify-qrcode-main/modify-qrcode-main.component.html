@@ -1,0 +1,83 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <strong>2.8.2 Stock Adj. 2</strong>
+        </div>
+        <div class="card-body">
+          <div class="form-group row">
+            <label class="col-md-2 col-form-label" for="planNo"><strong class="float-right">Plan No</strong></label>
+            <div class="col-md-2">
+              <input type="text" [(ngModel)]="mO_No" name="mO_No" class="form-control"
+                placeholder="Enter Plan No ..">
+            </div>
+            <label class="col-md-2 col-form-label" for="supplierNo"><strong class="float-right">Supplier No</strong></label>
+            <div class="col-md-3">
+              <ng-select2 [data]="supplierList" [options]="optionsSelectSupplier"
+                (valueChanged)="changedSupplier($event)" [cssImport]=true [disabled]="disable" [value]="supplier_ID">
+              </ng-select2>
+            </div>
+            <div class="col-md-2">
+              <button type="button" class="btn btn-success btn-block" (click)="search()"><i class="fa fa-search"></i>
+                Search
+              </button>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-2 col-form-label" for="qrCodeId"><strong class="float-right">Qrcode ID</strong></label>
+            <div class="col-md-2">
+              <input type="text" [(ngModel)]="qrCodeID" name="qrCodeID" class="form-control"
+                placeholder="Enter QrCode ID .."
+                (ngModelChange)="getPlanNoByQrCodeId()">
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <td>Plan No</td>
+                <td>Model Name</td>
+                <td>Model No</td>
+                <td>Article</td>
+                <td>Part</td>
+                <td>T2 Supplier</td>
+                <td>Stock Qty</td>
+              </tr>
+            </thead>
+            <tbody *ngIf="modifyQrCodeList.length === 0">
+              <tr>
+                <td colspan="8">
+                  <alert class="text-center" type="danger">
+                    <strong>No Data Found!</strong>
+                  </alert>
+                </td>
+              </tr>
+            </tbody>
+            <tbody>
+              <ng-container *ngFor="let item of modifyQrCodeList">
+                <tr>
+                  <td rowspan="2">
+                    <button class="btn btn-primary" (click)="changeQrcodeDetail(item)">{{item.mO_No}}</button>
+                </td>
+                <td>{{item.model_Name}}</td>
+                <td>{{item.model_No}}</td>
+                  <td>{{item.article}}</td>
+                  <td>{{item.custmoer_Part}}</td>
+                  <td>{{item.supplier_ID}}</td>
+                  <td>{{item.stock_Qty}}</td>
+                </tr>
+                <tr>
+                  <td colspan="7" class="text-center">
+                    {{item.material_ID}} - {{item.material_Name}}
+                  </td>
+                </tr>
+              </ng-container>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

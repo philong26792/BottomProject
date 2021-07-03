@@ -1,0 +1,128 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <strong>2.2 QR Code Generate</strong>
+        </div>
+        <form class="form-horizontal">
+          <div class="card-body">
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label" for="fromDate"><strong class="float-right">Receive
+                  Date</strong></label>
+              <div class="col-md-2">
+                <div class="input-group">
+                  <input type="text" placeholder="Start" id="fromDate" class="form-control" bsDatepicker
+                    [bsValue]="fromDate" [(ngModel)]="time_start" name="time_start"
+                    [bsConfig]="{isAnimated: true, dateInputFormat: 'YYYY/MM/DD'}">
+                  <span class="input-group-append">
+                    <button class="btn btn-primary" type="button" disabled><i class="fa fa-calendar"></i></button>
+                  </span>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="input-group">
+                  <input type="text" placeholder="End" class="form-control" bsDatepicker [bsValue]="toDate"
+                    [(ngModel)]="time_end" name="time_end"
+                    [bsConfig]="{isAnimated: true, dateInputFormat: 'YYYY/MM/DD'}">
+                  <span class="input-group-append">
+                    <button class="btn btn-primary" type="button" disabled><i class="fa fa-calendar"></i></button>
+                  </span>
+                </div>
+              </div>
+              <label class="col-md-1 col-form-label" for="version"><strong class="float-right">Plan No</strong></label>
+              <div class="col-md-2">
+                <input type="text" [(ngModel)]="mO_No" name="mO_No" class="form-control"
+                  placeholder="Enter Plan No  ..">
+              </div>
+              <div class="col-md-2">
+                <button type="button" class="btn btn-success btn-block" (click)="search()"><i class="fa fa-search"></i>
+                  Search
+                </button>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label" for="Supplier No"><strong class="float-right">Supplier
+                  No</strong></label>
+              <div class="col-md-3">
+                <ng-select2 [data]="supplierList" [options]="optionsSelectSupplier"
+                  (valueChanged)="changedSupplier($event)" [cssImport]=true [disabled]="disable" [value]="supplier_ID">
+                </ng-select2>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th class="text-center">
+                  <div class="custom-control custom-checkbox">
+                    <input [(ngModel)]="checkboxAll" type="checkbox" class="custom-control-input"
+                      (change)="checkAll($event)" id="all">
+                    <label class="custom-control-label" for="all"></label>
+                  </div>
+                </th>
+                <th>Plan No</th>
+                <th>Recive No</th>
+                <th>Batch</th>
+                <th>Math#</th>
+                <th>Math_Name</th>
+                <th>Supplier</th>
+              </tr>
+            </thead>
+            <tbody *ngIf="qrCodeGenerateList !== undefined && qrCodeGenerateList.length === 0">
+              <tr>
+                <td colspan="7">
+                  <alert class="text-center" type="danger">
+                    <strong>No Data Found!</strong>
+                  </alert>
+                </td>
+              </tr>
+            </tbody>
+            <tbody>
+              <ng-container *ngFor="let item of qrCodeGenerateList; let i = index">
+                <tr>
+                  <td class="text-center">
+                    <div class="custom-control custom-checkbox">
+                      <input type="checkbox" class="custom-control-input" [(ngModel)]="item.checkInput"
+                        (change)="onCheckboxChange($event, item)" id="{{item.receive_No}}">
+                      <label class="custom-control-label" for="{{item.receive_No}}"></label>
+                    </div>
+                  </td>
+                  <td>{{item.mO_No}}</td>
+                  <td>{{item.receive_No}}</td>
+                  <td>{{item.mO_Seq}}</td>
+                  <td>{{item.material_ID}}</td>
+                  <td>{{item.material_Name}}</td>
+                  <td>{{ item.supplier_ID}} - {{ item.supplier_Name }}</td>
+                </tr>
+              </ng-container>
+            </tbody>
+          </table>
+          <div class="d-flex">
+          </div>
+        </div>
+        <div class="d-flex">
+          <pagination *ngIf="qrCodeGenerateList!== undefined && qrCodeGenerateList.length > 0" [boundaryLinks]="true"
+            [totalItems]="pagination.totalItems" [(ngModel)]="pagination.currentPage"
+            [itemsPerPage]="pagination.itemsPerPage" (pageChanged)="pageChanged($event)" previousText="&lsaquo;"
+            nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;" [maxSize]=5>
+          </pagination>
+        </div>
+        <div class="card-footer" *ngIf="qrCodeGenerateList!== undefined && qrCodeGenerateList.length > 0">
+          <button (click)="pageQrCode()" class="btn btn-success">
+            <i class="fa fa-check"></i>
+            Generate QRCode
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

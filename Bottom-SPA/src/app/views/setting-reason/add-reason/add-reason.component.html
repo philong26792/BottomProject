@@ -1,0 +1,112 @@
+<div class="animated fadeIn">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="card">
+				<div class="card-header">
+					<strong>1.3 Reason - Add/Edit</strong>
+					<button type="button" class="btn  btn-primary float-right" [routerLink]="['/rack/setting-reason/list-reason']"
+						routerLinkActive="router-link-active">
+						<i class="fa fa-chevron-left"></i>
+						Back
+					</button>
+				</div>
+				<form class="form-horizontal" #addSettingReason="ngForm" (ngSubmit)="addSettingReason.valid">
+					<div class="card-body">
+						<div class="form-group row">
+							<label class="col-sm-2 col-lg-1 col-form-label ">
+								<strong>Kind</strong>
+							</label>
+							<div class="col-sm-4  col-lg-4">
+								<input type="number" min="0" class="form-control" value="0" name="Contact" [disabled]="check"
+									[(ngModel)]="reason.kind" required name="Kind">
+							</div>
+							<label class="col-sm-2 col-lg-1 col-form-label ">
+								<strong>Kind Name</strong>
+							</label>
+							<div class="col-sm-4  col-lg-4">
+								<input type="text" class="form-control" name="Contact" [disabled]="check" [(ngModel)]="reason.kind_Name"
+									required name="Kind Name">
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-sm-2 col-lg-1 col-form-label ">
+								<strong>Reason Code</strong>
+							</label>
+							<div class="col-sm-4  col-lg-4">
+								<input type="text" class="form-control" name="Contact" [disabled]="check"
+									[(ngModel)]="reason.reason_Code" required name="Reason Code">
+							</div>
+							<label class="col-sm-2 col-lg-1 col-form-label ">
+								<strong>HP Reason Code</strong>
+							</label>
+							<div class="col-sm-4  col-lg-4">
+								<input type="text" class="form-control" name="Contact" [(ngModel)]="reason.hP_Reason_Code" required
+									name="HP Reason Code">
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-sm-2 col-lg-1 col-form-label ">
+								<strong>Reason English Name</strong>
+							</label>
+							<div class="col-sm-4  col-lg-4">
+								<input type="text" class="form-control" name="Contact" [(ngModel)]="reason.reason_Ename" required
+									name="Reason English Name">
+							</div>
+							<label class="col-sm-2 col-lg-1 col-form-label ">
+								<strong>Reason Chinese Name</strong>
+							</label>
+							<div class="col-sm-4  col-lg-4">
+								<input type="text" class="form-control" name="Contact" [(ngModel)]="reason.reason_Cname" required
+									name="Reason Chinese Name">
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-sm-2 col-lg-1 col-form-label ">
+								<strong>Reason Local Name</strong>
+							</label>
+							<div class="col-sm-4  col-lg-4">
+								<input type="text" class="form-control" name="Contact" [(ngModel)]="reason.reason_Lname" required
+									name="Reason Local Name">
+
+							</div>
+							<label class="col-sm-2 col-lg-2 col-form-label ">
+								<strong>Transfer to HP</strong>
+							</label>
+							<div class="custom-control custom-checkbox mt-2">
+								<input type="checkbox" [ngModel]="trans_toHP" (change)="transToHPchange()" name="is_active"
+									id="is_active" class="custom-control-input" />
+								<label class="custom-control-label" for="is_active"></label>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-sm-2 col-lg-2 col-form-label offset-sm-6 offset-lg-5">
+								<strong>Is Shortage</strong>
+							</label>
+							<div class="custom-control custom-checkbox mt-2 ">
+								<input type="checkbox" [ngModel]="is_Shortage" (change)="isShortageChange()" name="is_shortage"
+									id="is_shortage" class="custom-control-input" />
+								<label class="custom-control-label" for="is_shortage"></label>
+							</div>
+						</div>
+
+					</div>
+					<div class="card-footer">
+						<div class="form-group row">
+							<div class="col">
+								<button type="button" class="btn btn-danger mr-1" (click)="cancel()" *ngIf="!check">
+									<i class="fa fa-ban"></i>
+									Cancel
+								</button>
+								<button type="button" class="btn btn-success mr-1" (click)="save()"
+									[disabled]="!addSettingReason.valid">
+									<i class="fa fa-check"></i>
+									Save
+								</button>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

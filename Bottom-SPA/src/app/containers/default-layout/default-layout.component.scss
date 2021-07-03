@@ -1,0 +1,52 @@
+
+.button-radius-top {
+    border-radius: 1px !important;
+}
+
+.btn-success {
+    font-weight: 400;
+    color: #fff;
+    background-color: #36c6d3;
+    border-color: #2bb8c4;
+}
+.btn-success1 {
+    font-weight: 400;
+    color: #fff;
+    background-color: #ff0000;
+    border-color: #ff0000;
+}
+.btn-success:hover {
+    background-color: #3cb2bd;
+    border-color: #3cb2bd;
+    color: white;
+}
+.btn-success1:hover {
+    background-color: #FF6347;
+    border-color: #3cb2bd;
+    color: white;
+}
+.btn-success .badge {
+    color: #36c6d3;
+    background-color: #fff;
+}
+.btn-success1 .badge {
+    color: #36c6d3;
+    background-color: #fff;
+}
+.badge {
+    font-size: 11px!important;
+    font-weight: 400;
+    height: 18px;
+    color: #fff;
+    padding: 3px 6px;
+    -webkit-border-radius: 12px!important;
+    -moz-border-radius: 12px!important;
+    border-radius: 12px!important;
+    text-shadow: none!important;
+    text-align: center;
+    vertical-align: middle;
+}
+
+li.nav-item.dropdown.mr-30 {
+    width: 175px;
+}

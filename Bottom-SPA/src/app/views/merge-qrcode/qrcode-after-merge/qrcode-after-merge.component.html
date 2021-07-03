@@ -1,0 +1,52 @@
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <strong>2.9.1 Merge QRCode - After Merge</strong>
+                    <button type="button" class="btn btn-sm btn-primary float-right" [routerLink]="'/merge-qrcode/main'">
+                        <i class="fa fa-chevron-left"></i> Back
+                    </button>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <table class="table table-bordered">
+                            <thead class="text-center">
+                                <tr>
+                                    <td>New QRCode</td>
+                                    <td>Plan No</td>
+                                    <td>Merge Time</td>
+                                    <td>Qty</td>
+                                    <td>Updated By</td>
+                                    <td>Action</td>
+                                </tr>
+                            </thead>
+                            <tbody class="text-center" *ngIf="qrCodeMergeModelList.length > 0">
+                                <ng-container *ngFor="let qrCodeMergeModel of qrCodeMergeModelList">
+                                    <tr>
+                                        <td rowspan="2">{{qrCodeMergeModel.qrCode_ID}}</td>
+                                        <td rowspan="2">{{qrCodeMergeModel.mO_No}}</td>
+                                        <td>{{qrCodeMergeModel.merge_Time | date: 'yyyy/MM/dd, HH:mm:ss'}}</td>
+                                        <td>{{qrCodeMergeModel.qty}}</td>
+                                        <td>{{qrCodeMergeModel.update_By}}</td>
+                                        <td>
+                                            <button (click)="showDetail(qrCodeMergeModel)" class="btn btn-warning btn-group">Show Detail</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3" class="text-center">
+                                            {{qrCodeMergeModel.material_ID}} - {{qrCodeMergeModel.material_Name}}
+                                        </td>
+                                        <td style="border-top-style: hidden;">
+                                            <button (click)="print(qrCodeMergeModel)" class="btn btn-primary btn-group">QRCode</button>
+                                        </td>
+                                    </tr>
+                                </ng-container>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

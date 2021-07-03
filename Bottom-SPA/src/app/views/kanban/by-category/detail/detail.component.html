@@ -1,0 +1,77 @@
+<div class="app-body">
+  <main class="main">
+    <div class="container-fluid animated fadeIn">
+      <div class="row header">
+        <div class="col-md-8">
+          <strong class="text title">By Category By Code</strong> </div>
+        <div class="col-md-4">
+          <button type="button" class="btn float-right btn-back" [routerLink]="['/kanban/by-category/main']">
+            <i class="fa fa-chevron-left"></i>
+            Back</button>
+          <span class="text-white float-right mr-3 mt-1 time">{{time | date : 'yyyy/MM/dd hh:mm:ss a'}}</span>
+        </div>
+      </div>
+      <div class="line-gradient"></div>
+      <div class="row head-seclect-show mt-4">
+        <div class="col-md-2 col-6">
+          <input type="text" class="form-control txt-brand" disabled [value]="'TTL PRS : ' + TTLPRS" />
+        </div>
+        <div class="col-md-2 col-6">
+          <input type="text" class="form-control txt-brand" disabled [value]="codeId + ' ' + codeName" />
+        </div>
+        <div class="col-md-8 col-12">
+          <button type="button" class="btn btn-sm btn-success btn-excel float-right " (click)="exportExcel()">
+            <i class="fa fa-file-excel-o"></i> Excel
+          </button>
+        </div>
+      </div>
+      <div class="row body-list table-reponse mt-4">
+        <div class="col-12">
+          <div class="card table-responsive">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>Rack</th>
+                  <th>Tool ID</th>
+                  <th>MATL. Code</th>
+                  <th>Material Name</th>
+                  <th>Unit</th>
+                  <th class="text-right">Qty</th>
+                  <th>T2 Supplier</th>
+                </tr>
+              </thead>
+              <tbody class="template-fix1">
+                <tr *ngFor="let item of listKanbanByCategoryDetail">
+                  <td>{{item.rack}}</td>
+                  <td><a href="javascript:;" (click)="detailByToolCode(item.toolCode)"
+                      style="text-decoration: underline">{{item.toolCode}}</a></td>
+                  <td>{{item.materialId}}</td>
+                  <td>{{item.materialName}}</td>
+                  <td>{{item.unit}}</td>
+                  <td class="text-right">{{item.qty}}</td>
+                  <td>{{item.t2_Supplier}} </td>
+                </tr>
+                <tr *ngIf="nodata" >
+                  <td colspan="10">
+                    <div class="alert-table alert alert-waring ">
+                      No data found !
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="d-flex" *ngIf="pagination.totalPages > 1">
+            <pagination [boundaryLinks]="true" [totalItems]="pagination.totalItems" [(ngModel)]="pagination.currentPage"
+              [itemsPerPage]="pagination.itemsPerPage" (pageChanged)="pageChanged($event)" previousText="&lsaquo;"
+              nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;" [maxSize]="5">
+            </pagination>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "ball-clip-rotate" [fullScreen] = "true"></ngx-spinner>
+
+

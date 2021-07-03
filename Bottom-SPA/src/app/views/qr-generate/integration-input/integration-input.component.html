@@ -1,0 +1,144 @@
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <strong>2.3 QR Generate (Integration)</strong>
+                </div>
+                <form class="form-horizontal" #addAuditTypeForm="ngForm">
+                    <div class="card-body">
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label" for="fromDate"><strong class="float-right">Receive
+                                    Date</strong></label>
+                            <div class="col-md-2">
+                                <div class="input-group">
+                                    <input type="text" placeholder="Start" id="fromDate" class="form-control"
+                                        bsDatepicker [(ngModel)]="time_start" name="time_start"
+                                        [bsConfig]="{isAnimated: true, dateInputFormat: 'YYYY/MM/DD'}">
+                                    <span class="input-group-append">
+                                        <button class="btn btn-primary" type="button" disabled><i
+                                                class="fa fa-calendar"></i></button>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="input-group">
+                                    <input type="text" placeholder="End" class="form-control" [(ngModel)]="time_end"
+                                        bsDatepicker name="time_end"
+                                        [bsConfig]="{isAnimated: true, dateInputFormat: 'YYYY/MM/DD'}">
+                                    <span class="input-group-append">
+                                        <button class="btn btn-primary" type="button" disabled><i
+                                                class="fa fa-calendar"></i></button>
+                                    </span>
+                                </div>
+                            </div>
+                            <label class="col-md-2 col-form-label" for="Plan_No"><strong class="float-right">Plan No
+                                </strong></label>
+                            <div class="col-md-2">
+                                <input type="text" name="purchase_No" [(ngModel)]="mO_No" placeholder="Enter Plan No"
+                                    class="form-control">
+                            </div>
+                            <div class="col-md-2">
+
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label" for="Supplier No"><strong
+                                    class="float-right">Supplier No</strong></label>
+                            <div class="col-md-3">
+                                <ng-select2 [data]="supplierList" [options]="optionsSelectSupplier"
+                                    (valueChanged)="changedSupplier($event)" [cssImport]=true [disabled]="disable"
+                                    [value]="supplier_ID"></ng-select2>
+                            </div>
+                            <div class="col-md-1">
+
+                            </div>
+                            <label class="col-md-2 col-form-label" for="status"><strong
+                                    class="float-right">Location</strong></label>
+                                    <div class="col-md-1 custom-control custom-checkbox pt-2">
+                                        <input type="checkbox" class="custom-control-input" id="check-location" [checked]="checkPrintLocation == 'true'" (change)="changeCheckPrintLocation($event)">
+                                        <label class="custom-control-label ml-3" for="check-location"></label>
+                                    </div>
+                            <div class="col-md-2">
+                                <button type="button"  (click)="search()" class="btn btn-success btn-block"><i class="fa fa-search"></i>
+                                    Search
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="card-body">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Rack Location</th>
+                                <th>Plan No</th>
+                                <th>Batch</th>
+                                <th>Mat#</th>
+                                <th>Mat# Name</th>
+                                <th>Supplier</th>
+                                <th>Receive Qty</th>
+                                <th>QrCode</th>
+                            </tr>
+                        </thead>
+                        <tbody *ngIf="integrationInputList.length === 0">
+                            <tr>
+                                <td colspan="8">
+                                    <alert class="text-center" type="danger">
+                                        <strong>No Data Found!</strong>
+                                    </alert>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tbody>
+                            <tr *ngFor="let item of integrationInputList;let i = index">
+                                <td>
+                                    <input  autocomplete="off"
+                                            style="width: 170px;" 
+                                            *ngIf="isSubmit === false;else elseInputRack" 
+                                            name="rack_location" 
+                                            [(ngModel)]="item.rack_Location" 
+                                            type="text"
+                                            id = "{{item.qrCode_ID + i}}"
+                                            (mouseleave) = "checkRackExist(item, i)"
+                                            class="form-control">
+                                    <ng-template #elseInputRack>
+                                        <input  name="rack_location" disabled [(ngModel)]="item.rack_Location" type="text" class="form-control">
+                                    </ng-template>
+                                </td>
+                                <td>{{item.mO_No}}</td>
+                                <td>{{item.mO_Seq}}</td>
+                                <td>{{item.material_ID}}</td>
+                                <td>{{item.material_Name}}</td>
+                                <td>{{item.supplier_ID}} - {{item.supplier_Name}}</td>
+                                <td>{{item.receive_Qty}}</td>
+                                <td *ngIf="!isSubmit">
+                                </td>
+                                <td *ngIf="isSubmit">
+                                    <button (click)="print(item)" class="btn btn-success">QrCode</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="d-flex">
+                        <pagination *ngIf="integrationInputList.length > 0 && isSubmit===false" [boundaryLinks]="true" [totalItems]="pagination.totalItems" [(ngModel)]="pagination.currentPage"
+                        [itemsPerPage]="pagination.itemsPerPage" (pageChanged)="pageChanged($event)" previousText="&lsaquo;"
+                        nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;" [maxSize]=5>
+                        </pagination>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button (click)="cancle()" class="btn btn-danger mr-2"><i class="fa fa-ban"></i> Cancel</button>
+                    <button (click)="submit()" *ngIf="(isSubmit === false && countParam > 0);else elseSubmit" class="btn btn-success mr-2"><i class="fa fa-check"></i> Submit</button>
+                    <ng-template #elseSubmit>
+                        <button disabled class="btn btn-success mr-2"><i class="fa fa-check"></i> Submit</button>
+                    </ng-template>
+                    <button *ngIf="isSubmit === true;else elsePrintAll" (click)="printAll()" class="btn btn-primary mr-2"><i class="fa fa-check"></i> Print</button>
+                    <ng-template #elsePrintAll>
+                        <button disabled class="btn btn-primary mr-2"><i class="fa fa-check"></i> Print</button>
+                    </ng-template>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

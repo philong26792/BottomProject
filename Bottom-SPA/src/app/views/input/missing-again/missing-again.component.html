@@ -1,0 +1,165 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <strong>5.4 Missing Print</strong>
+        </div>
+        <form class="form-horizontal">
+          <div class="card-body">
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label" for="fromDate"><strong class="float-right">Modify Date</strong></label>
+              <div class="col-md-2">
+                <div class="input-group">
+                  <input type="text" placeholder="Start" class="form-control" bsDatepicker [bsConfig]="bsConfig"
+                    [(ngModel)]="fromTime" name="fromTime" />
+                  <span class="input-group-append">
+                    <button class="btn btn-primary" type="button" disabled>
+                      <i class="fa fa-calendar"></i>
+                    </button>
+                  </span>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="input-group">
+                  <input type="text" placeholder="End" class="form-control" bsDatepicker [bsConfig]="bsConfig"
+                    [(ngModel)]="toTime" name="toTime" />
+                  <span class="input-group-append">
+                    <button class="btn btn-primary" type="button" disabled>
+                      <i class="fa fa-calendar"></i>
+                    </button>
+                  </span>
+                </div>
+              </div>
+              <label class="col-md-1 col-form-label" for="Plan No"><strong class="float-right">Plan No
+                </strong></label>
+              <div class="col-md-2">
+                <input type="text" [(ngModel)]="mO_No" placeholder="Enter Plan No" name="mO_No" class="form-control">
+              </div>
+              <label class="col-md-1 col-form-label" for="supplierNo"><strong class="float-right">Supplier No</strong></label>
+              <div class="col-md-2">
+                <ng-select2 [data]="supplierList" [(ngModel)]="supplier_ID" [value]="supplier_ID" width="100%" name="supplier_ID">
+                </ng-select2>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label" for="dowloaded"><strong class="float-right">Downloaded</strong></label>
+              <div class="col-md-1">
+                <select
+                  [(ngModel)]="downloaded"
+                  class="form-control"
+                  id="dowloaded"
+                  name ="dowloaded"
+                >
+                  <option value="All">All</option>
+                  <option value="Y">Y</option>
+                  <option value="N">N</option>
+                </select>
+              </div>
+              <label class="col-md-1  col-form-label" for="Material"><strong >Material
+                </strong></label>
+              <div class="col-md-2">
+                <input type="text" (keyup)="findMaterialName()" [(ngModel)]="material_ID" placeholder="Enter Material"
+                  name="material_id" class="form-control">
+              </div>
+              <div class="col-md-3">
+                <input [(ngModel)]="material_Name" type="text" disabled name="material_name" class="form-control">
+              </div>
+              <div class="col-md-3">
+                <button type="button" (click)="search()" class="btn btn-success mr-2">
+                  <i class="fa fa-search"></i> Search
+                </button>
+                <button type="button" class="btn btn-primary" (click)="exportExcel()">
+                  <i class="fa fa-file-excel-o"></i> Excel
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body">
+          <table class="table table-bordered text-center">
+            <thead>
+              <tr class="text-center vertical-middle">
+                <th>
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="checkAll"
+                      (change)="checkAll($event)" 
+                      [(ngModel)]="checkboxAll">
+                    <label class="custom-control-label" for="checkAll"></label>
+                  </div>
+                </th>
+                <th>Downloaded</th>
+                <th>Type</th>
+                <th>Plan No</th>
+                <th>Batch</th>
+                <th>Model No</th>
+                <th>Article</th>
+                <th>Part</th>
+                <th>Missing Qty</th>
+                <!-- <th>Rack Location</th> -->
+                <th>Missing No</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-container *ngFor="let item of missingAgainList; let i = index">
+                <tr class="text-center vertical-middle">
+                  <td rowspan="2">
+                    <div class="custom-control custom-checkbox">
+                      <input type="checkbox" class="custom-control-input" id="{{item.missing_No + item.mO_Seq}}" 
+                        [(ngModel)]="item.checked" (change)="checkElement()">
+                      <label class="custom-control-label" for="{{item.missing_No + item.mO_Seq}}"></label>
+                    </div>
+                  </td>
+                  <td  rowspan="2">{{(item.download_count==0||item.download_count ==null)?"N":"Y"}}</td>
+                  <td rowspan="2" class="align-middle">
+                    <p [innerHTML]="item.type"></p>
+                  </td>
+                  <td>{{item.mO_No}}</td>
+                  <td>{{item.mO_Seq}}</td>
+                  <td>{{item.model_No}} - {{item.model_Name}}</td>
+                  <td>{{item.article}}</td>
+                  <td>{{item.custmoer_Part}} - {{item.custmoer_Name}}</td>
+                  <td>{{item.missing_Qty}}</td>
+                  <!-- <td>{{item.rack_Location}}</td> -->
+                  <td rowspan="2" class="align-middle">{{item.missing_No}}</td>
+                  <td rowspan="2" class="align-middle">
+                    <!-- <button [routerLink]="['/input/missing-print/', item.missing_No]" style="margin-left: 5px;"
+                      class="btn btn-warning">Missing</button> -->
+                      <button (click)="printMissing(item)" style="margin-left: 5px;"
+                      class="btn btn-warning">Missing</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="6">
+                    {{item.material_ID}} - {{item.material_Name}}
+                  </td>
+                </tr>
+              </ng-container>
+              <tr *ngIf="missingAgainList.length === 0">
+                <td colspan="11">
+                  <alert class="text-center" type="danger">
+                    <strong>No Data Found!</strong>
+                  </alert>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="d-flex">
+            <pagination *ngIf="pagination.totalPages > 1"
+              [boundaryLinks]="true" [totalItems]="pagination.totalItems" [(ngModel)]="pagination.currentPage"
+              [itemsPerPage]="pagination.itemsPerPage" (pageChanged)="pageChanged($event)" previousText="&lsaquo;"
+              nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;" [maxSize]=5>
+            </pagination>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

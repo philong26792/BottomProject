@@ -1,0 +1,92 @@
+<div class="app-body">
+  <main class="main">
+    <div class="container-fluid animated fadeIn">
+      <div class="row header">
+        <div class="col-md-8">
+          <strong class="text title">By Category By Tool <!-- <i class="fa fa-code-fork" aria-hidden="true"></i>--></strong> </div>
+        <div class="col-md-4">
+          <button type="button" class="btn float-right btn-back" (click)="back()">
+            <i class="fa fa-chevron-left"></i>
+            Back</button>
+            <span class="text-white float-right mr-3 mt-1 time">{{time | date : 'yyyy/MM/dd hh:mm:ss a'}}</span>
+        </div>
+      </div>
+      <div class="line-gradient"></div>
+      <div class="row head-seclect-show mt-4">
+          <div class="col-md-2 col-6">
+            <input type="text" class="form-control txt-brand" disabled [value]="'TTL PRS : ' + TTLPRS" />
+          </div>
+          <div class="col-md-2 col-6">
+            <input type="text" class="form-control txt-brand" disabled [value]="codeId + ' ' + codeName" />
+          </div>
+          <div class="col-md-2 col-6">
+            <input type="text" class="form-control txt-brand" disabled [value]="'Tool ID : ' + toolCode" />
+          </div>
+          <div class="col-md-6 col-12">
+            <button type="button" class="btn btn-sm btn-success btn-excel float-right " (click)="exportExcel()">
+              <i class="fa fa-file-excel-o"></i> Excel
+            </button>
+          </div>
+      </div>
+      <div class="row body-list table-reponse mt-4">
+        <div class="col-12">
+          <div class="card table-responsive">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>Rack</th>
+                  <th>PO+BATCH</th>
+                  <th>MTRL.Code </th>
+                  <th>Material Name </th>
+                  <th>Unit</th>
+                  <th>Model Name</th>
+                  <th>Article</th>
+                  <th>Parts</th>
+                  <th class="text-right">Qty</th>
+                  <th>T2 Supplier</th>
+                  <th>T3 Supplier</th>
+                  <th>ASY Line</th>
+                  <th>Start STF Date</th>
+                </tr>
+              </thead>
+              <tbody class="template-fix1">
+                <tr *ngFor="let item of listKanbanByCategoryDetailByToolCode">
+                  <td class="align-middle">{{item.rack}}</td>
+                  <td class="align-bottom"><a href="javascript:;" (click)="detailByPo(item.poAndBatch)" style="text-decoration: underline;">{{item.poAndBatch}}</a></td>
+                  <td class="align-bottom">{{item.materialId}}</td>
+                  <td class="align-bottom">{{item.materialName}}</td>
+                  <td class="align-bottom">{{item.unit}}</td>
+                  <td class="align-bottom">{{item.model}}</td>
+                  <td class="align-bottom">{{item.article}}</td>
+                  <td class="align-bottom">{{item.customerPart}}</td>
+                  <td class="align-bottom text-right">{{item.qty}}</td>
+                  <td class="align-bottom">{{item.t2_Supplier}} </td>
+                  <td class="align-bottom">{{item.t3_Supplier}} </td>
+                  <td class="align-bottom">{{item.lineASY}}</td>
+                  <td class="align-bottom">{{item.stockfitingDate | date : 'yyyy/MM/dd'}}</td>
+                </tr>
+                <tr *ngIf="nodata">
+                  <td colspan="10">
+                    <div class="alert-table alert alert-waring ">
+                      No data found !
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="d-flex" *ngIf="pagination.totalPages > 1">
+            <pagination [boundaryLinks]="true" [totalItems]="pagination.totalItems" [(ngModel)]="pagination.currentPage"
+              [itemsPerPage]="pagination.itemsPerPage" (pageChanged)="pageChanged($event)" previousText="&lsaquo;"
+              nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;" [maxSize]="5">
+            </pagination>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "ball-clip-rotate" [fullScreen] = "true"></ngx-spinner>
+
+
+

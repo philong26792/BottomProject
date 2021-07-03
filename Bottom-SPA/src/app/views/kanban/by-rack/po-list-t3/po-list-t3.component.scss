@@ -1,0 +1,66 @@
+a.btn-back {
+  color: #fff;
+  border: 2px solid;
+  border-image-source: linear-gradient(to bottom, #c909f4, #0ff3a6) !important;
+  border-image-slice: 1;
+  background: #14131d;
+}
+.line-gradient {
+  height: 2px;
+  background-image: linear-gradient(to top right, #0ff3a6, #c909f4);
+}
+.app-body {
+  background-color: #000 !important;
+  height: 100vh;
+  font-family: Century Gothic Regular, sans-serif;
+  font-size: 20px;
+}
+@media (max-width: 991.98px) {
+  .app-body {
+    margin-top: 0px;
+  }
+}
+
+.btn-export {
+  border: 1px solid #fff !important;
+  color: #fff !important;
+  background: #7178cf !important;
+}
+.table-bordered th {
+  color: #fff;
+  border: 1px solid #c0c0c0;
+}
+.btn-excel {
+  font-size:  1.2rem;
+}
+
+.time {
+  font-size: x-large;
+}
+
+table tbody {
+  background-color: #14131D;
+}
+
+.title {
+  font-size: xx-large;
+  color: #fff;
+}
+
+.alert-table {
+  background-color: #ffc241;
+  border-color: #ffbd31;
+  text-align: center;
+  text-transform: uppercase;
+  color: #343a40;
+  font-weight: bold;
+  margin-bottom: 0;
+}
+
+.txt-brand {
+  font-size: 1.2rem;
+}
+
+.card.table-responsive {
+  overflow-y: hidden;
+}

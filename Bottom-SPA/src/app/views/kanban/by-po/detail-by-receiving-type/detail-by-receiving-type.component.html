@@ -1,0 +1,98 @@
+<div class="app-body">
+    <main class="main">
+        <div class="container-fluid animated fadeIn">
+            <div class="row">
+                <div class="col-8 pt-3">
+                    <strong class="text title">By PO Detail</strong>
+                </div>
+                <div class="col-4 mt-3 mb-3">
+                    <a href="javascript:;" class="btn btn-back btn-dark float-right"
+                        [routerLink]="['/kanban/by-po/detail']">
+                        <span>
+                            <i class="fa fa-chevron-left"></i>
+                            <span> Back</span>
+                        </span>
+                    </a>
+                    <span class="text-white float-right mr-3 time mt-1">{{time | date : 'yyyy/MM/dd hh:mm:ss a'}}</span>
+                </div>
+            </div>
+            <div class="line-gradient mb-4"></div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <form class="form-horizontal">
+                            <div class="card-body template-fix1">
+                                <div class="form-group row">
+                                    <div class="col-md-2">
+                                        STF:
+                                        {{kanbanByPoDetailByReceivingType.plan_Start_STF | date: 'yyyy/MM/dd'}}
+                                    </div>
+                                    <div class="col-md-1">
+                                        CELL: {{kanbanByPoDetailByReceivingType.line_ID}}
+                                    </div>
+                                    <div class="col-md-2">
+                                        PO+Batch: {{kanbanByPoDetailByReceivingType.mO_No}}
+                                        {{kanbanByPoDetailByReceivingType.mO_Seq}}
+                                    </div>
+                                    <div class="col-md-2">
+                                        Model Name: {{kanbanByPoDetailByReceivingType.model_Name}}
+                                    </div>
+                                    <div class="col-md-2">
+                                        Art#: {{kanbanByPoDetailByReceivingType.article}}
+                                    </div>
+                                    <div class="col-md-2">
+                                        Plan Qty: {{kanbanByPoDetailByReceivingType.plan_Qty}}
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="display: flex;flex-direction: row;">
+                <div class="col-12">
+                    <div class="card table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Transaction Date</th>
+                                    <th>T2 Supplier</th>
+                                    <th>Rack Location</th>
+                                    <th>Material No</th>
+                                    <th>Material Name</th>
+                                    <th>QRCode ID</th>
+                                    <th>Receiving Type</th>
+                                    <th>Total Pairs</th>
+                                </tr>
+                            </thead>
+                            <tbody class="template-fix1">
+                                <tr *ngFor="let item of listKanbanByPoDetailByReceivingType; let i = index">
+                                    <td>{{i + 1}}</td>
+                                    <td>{{item.transaction_Date | date: 'yyyy/MM/dd'}}</td>
+                                    <td>{{item.t2_Supplier}}</td>
+                                    <td>{{item.rack_Location}}</td>
+                                    <td>{{item.material_No}}</td>
+                                    <td>{{item.material_Name}}</td>
+                                    <td>{{item.qrCode_ID}}</td>
+                                    <td>{{item.receiving_Type}}</td>
+                                    <td>{{item.total_Pairs}}</td>
+                                </tr>
+                                <tr *ngIf="nodata">
+                                    <td colspan="10">
+                                      <div class="alert-table alert alert-waring ">
+                                        No data found !
+                                      </div>
+                                    </td>
+                                  </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-clip-rotate" [fullScreen]="true">
+</ngx-spinner>

@@ -1,0 +1,132 @@
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <strong>2.8 Stock Adj. - Missing Print</strong>
+                    <button type="button" class="btn btn-sm btn-primary float-right" (click)="back()">
+                        <i class="fa fa-chevron-left"></i> Back
+                    </button>
+                </div>
+                <div class="card-body">
+                    <div class="container div-hidden" id="wrap-print">
+                        <div *ngFor="let item of listMissingPrint">
+                            <div class="row print-all">
+                                <div class="col text-center">
+                                    <h1>BTM WH Missing Mat# Form</h1>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-8 pt-3">
+                                    <h4>Missing Mat# No: {{ item.materialMissing.missing_No }}</h4>
+                                    <h4>Print Date: {{ today | date: "yyyy/MM/dd" }}</h4>
+                                </div>
+                                <div class="col-4">
+                                </div>
+                            </div>
+                            <div class="row" class="custom-thead pt-3 pb-3 border-3 border-primary"
+                                style="border:solid 1px #e4e5e6 !important;">
+                                <div class="col">
+                                    <div class="row m-2">
+                                        <div class="col-3">
+                                            Purchase# : {{ item.materialMissing.purchase_No }}
+                                        </div>
+                                        <div class="col-3">PO# : {{ item.materialMissing.mO_No }}</div>
+                                        <div class="col-2">
+                                            <!-- Batch : {{ item.materialMissing.mO_Seq }} -->
+                                        </div>
+                                        <div class="col-4 text-right">
+                                            Original Delivery Date:
+                                            {{ item.materialMissing.confirm_Delivery | date: "yyyy/MM/dd" }}
+                                        </div>
+                                    </div>
+                                    <div class="row m-2">
+                                        <div class="col-3">Model : {{ item.materialMissing.model_No }} - {{
+                                            item.materialMissing.model_Name }}</div>
+                                        <div class="col-2">Art# : {{ item.materialMissing.article }}</div>
+                                        <div class="col-1">
+                                        </div>
+                                        <div class="col-4">Parts :
+                                            {{ item.materialMissing.custmoer_Part}} -
+                                            {{ item.materialMissing.custmoer_Name }}
+                                        </div>
+                                    </div>
+                                    <div class="row m-2">
+                                        <div class="col-1">
+                                            Mat# :
+                                        </div>
+                                        <div class="col-6">
+                                            {{ item.materialMissing.material_ID }} -
+                                            {{ item.materialMissing.material_Name }}
+                                        </div>
+                                        <div class="col-3">
+                                            T2_Supplier : {{ item.materialMissing.supplier_ID }} -
+                                            {{ item.materialMissing.supplier_Name }}
+                                        </div>
+                                        <div class="col-2 text-right">
+                                            Total Qty : {{ item.transactionDetailByMissingNo | sumAttr: "trans_Qty" }}
+                                        </div>
+                                    </div>
+                                    <div class="row m-2">
+                                        <div class="col-5">
+                                            Subcon : {{ item.materialMissing.process_Code }} -
+                                            {{ item.materialMissing.subcon_Name }}
+                                        </div>
+                                        <div class="col-5 text-center">
+                                            T3_Supplier : {{ item.materialMissing.t3_Supplier }} -
+                                            {{ item.materialMissing.t3_Supplier_Name }}
+                                        </div>
+                                        <div class="col-2 text-right">
+                                            Missing Qty : {{ item.transactionDetailByMissingNo | sumAttr: "untransac_Qty" }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-bordered text-center">
+                                    <thead>
+                                        <tr>
+                                            <th width="30%">PO# Size</th>
+                                            <td *ngFor="let item2 of item.transactionDetailByMissingNo">
+                                                {{ item2.order_Size }}
+                                            </td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="custom-thead">Accumated Qty</td>
+                                            <td *ngFor="let item2 of item.transactionDetailByMissingNo">
+                                                {{ item2.qty }}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="custom-thead">Trans In Qty</td>
+                                            <td *ngFor="let item2 of item.transactionDetailByMissingNo">
+                                                {{ item2.trans_Qty }}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="custom-thead">Missing Qty</td>
+                                            <td *ngFor="let item2 of item.transactionDetailByMissingNo">
+                                                {{ item2.untransac_Qty }}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button type="button" class="btn btn-primary" [useExistingCss]="true" printSectionId="wrap-print"
+                        ngxPrint>
+                        <i class="fa fa-print"></i> Print
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-clip-rotate" [fullScreen]="true">
+</ngx-spinner>

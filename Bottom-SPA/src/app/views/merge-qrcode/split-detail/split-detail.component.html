@@ -1,0 +1,105 @@
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <strong>2.9.2 Offset A ->a1,a2… - Detail</strong>
+                    <button type="button" class="btn btn-sm btn-primary float-right" [routerLink]="'/merge-qrcode/split/main'">
+                        <i class="fa fa-chevron-left"></i> Back
+                    </button>
+                    <button type="button" 
+                        class="btn btn-sm btn-success float-right mr-2" 
+                        [routerLink]="['/merge-qrcode/split/process', transacNo]">
+                        <i class="fa fa-check"></i> Split
+                    </button>
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered text-center">
+                        <thead>
+                            <tr>
+                                <td>Plan No</td>
+                                <td>Batch</td>
+                                <td>Split Time</td>
+                                <td>Stock Qty</td>
+                                <td>Pre-Buy/ Original Plan No</td>
+                                <td>Rack Location</td>
+                                <td>Update By</td>
+                                <td>Action</td>
+                            </tr>
+                        </thead>
+                        <tbody *ngIf="splitInfo.splitPlanNoChild.length > 0">
+                            <tr>
+                                <td rowspan="2" class="align-middle">{{splitInfo.splitPlanNoParent.mO_No}}</td>
+                                <td>{{splitInfo.splitPlanNoParent.mO_Seq}}</td>
+                                <!-- <td>{{splitInfo.splitPlanNoParent.split_Time | date:'yyyy/MM/dd HH:mm:ss'}}</td> -->
+                                <td>{{splitInfo.splitPlanNoChild[0].split_Time | date:'yyyy/MM/dd HH:mm:ss'}}</td>
+                                <td>{{splitInfo.splitPlanNoParent.stock_Qty}}</td>
+                                <td>{{splitInfo.splitPlanNoParent.preBuy_MO_No}}</td>
+                                <td>{{splitInfo.splitPlanNoParent.rack_Location}}</td>
+                                <td>{{splitInfo.splitPlanNoParent.updated_By}}</td>
+                                <td rowspan="2" class="align-middle">
+                                    <button class="btn btn-warning mr-2"
+                                        [routerLink]="['/merge-qrcode/split/qrcode-detail', splitInfo.splitPlanNoParent.transac_No]">
+                                        <i class="fa fa-search-plus"></i> Detail
+                                    </button>
+                                    <button class="btn btn-primary" 
+                                        (click)="printParent(splitInfo.splitPlanNoParent)"
+                                        [disabled]="splitInfo.splitPlanNoParent.stock_Qty==0">
+                                        <i class="fa fa-print"></i> QRCode
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="6">
+                                    {{splitInfo.splitPlanNoParent.material_ID}} - {{splitInfo.splitPlanNoParent.material_Name}}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-bordered text-center" *ngIf="splitInfo.splitPlanNoChild.length > 0">
+                        <thead>
+                            <tr>
+                                <td>Plan No</td>
+                                <td>Batch</td>
+                                <td>Split Time</td>
+                                <td>Stock Qty</td>
+                                <td>Pre-Buy/ Original Plan No</td>
+                                <td>Rack Location</td>
+                                <td>Update By</td>
+                                <td>Action</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ng-container *ngFor="let item of splitInfo.splitPlanNoChild">
+                                <tr>
+                                    <td rowspan="2" class="align-middle">{{item.mO_No}}</td>
+                                    <td>{{item.mO_Seq}}</td>
+                                    <td>{{item.split_Time | date: 'yyyy/MM/dd HH:mm:ss'}}</td>
+                                    <td>{{item.stock_Qty}}</td>
+                                    <td>{{item.preBuy_MO_No}}</td>
+                                    <td>{{item.rack_Location}}</td>
+                                    <td>{{item.updated_By}}</td>
+                                    <td rowspan="2" class="align-middle">
+                                        <button class="btn btn-warning mr-2"
+                                            (click)="detail(item.transac_No)">
+                                            <i class="fa fa-search-plus"></i> Detail
+                                        </button>
+                                        <button class="btn btn-primary"
+                                            (click)="print(item)">
+                                            <i class="fa fa-print"></i> QRCode
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="6">
+                                        {{item.material_ID}} - {{item.material_Name}}
+                                    </td>
+                                </tr>
+                            </ng-container>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

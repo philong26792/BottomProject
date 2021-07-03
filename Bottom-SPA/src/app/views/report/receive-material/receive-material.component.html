@@ -1,0 +1,93 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <strong>4.1 Receive Material Report</strong>
+        </div>
+        <form class="form-horizontal">
+          <div class="card-body">
+            <div class="form-group row">
+              <div class="col-md-4 col-lg-4 col-xl-2 col-sm-6 col-xs-12">
+                <label class="badge badge-warning">Date Type</label>
+                <select name="dateType" id="" class="form-control" [(ngModel)]="dateType">
+                  <option value="1">Expected Delivery Date</option>
+                  <option value="2">Received Date</option>
+                  <option value="3">Plan Start STF Date</option>
+                  <option value="4">Plan Start ASY Date</option>
+                  <option value="5">Current Stock</option>
+                  <option value="6">CRD</option>
+                </select>
+              </div>
+              <div class="col-md-4 col-lg-4 col-xl-2 col-sm-6 col-xs-12">
+                <label class="badge badge-warning">From Date</label>
+                <div class="input-group">
+                  <input type="text" placeholder="Start" id="fromDate" class="form-control" bsDatepicker
+                    name="time_start" [bsConfig]="bsConfig" onkeydown="return false" [(ngModel)]="dateStart"
+                    [disabled]="dateType==5">
+                  <span class="input-group-append">
+                    <button class="btn btn-primary" type="button" disabled><i class="fa fa-calendar"></i></button>
+                  </span>
+                </div>
+              </div>
+              <div class="col-md-4 col-lg-4 col-xl-2 col-sm-6 col-xs-12">
+                <label class="badge badge-warning">To Date</label>
+                <div class="input-group">
+                  <input type="text" placeholder="End" id="fromDate" class="form-control" bsDatepicker name="time_end"
+                    [bsConfig]="bsConfig" onkeydown="return false" [(ngModel)]="dateEnd" [disabled]="dateType==5">
+                  <span class="input-group-append">
+                    <button class="btn btn-primary" type="button" disabled><i class="fa fa-calendar"></i></button>
+                  </span>
+                </div>
+              </div>
+              <div class="col-md-4 col-lg-4 col-xl-2 col-sm-6 col-xs-12">
+                <label class="badge badge-warning">Plan No</label>
+                <input type="text" placeholder="Plan No" name="moNo" class="form-control" [(ngModel)]="moNo">
+              </div>
+              <div class="col-md-4 col-lg-4 col-xl-2 col-sm-6 col-xs-12">
+                <label class="badge badge-warning">Batch</label>
+                <input type="text" placeholder="Batch" name="moSeq" class="form-control" [(ngModel)]="batch">
+              </div>
+              <div class="col-md-4 col-lg-4 col-xl-2 col-sm-6 col-xs-12">
+                <label class="badge badge-warning">Supplier</label>
+                <ng-select2 [data]="supplierList" [options]="optionsSelectSupplier"
+                  (valueChanged)="changedSupplier($event)" [cssImport]=true [disabled]="disable" [value]="supplier">
+                </ng-select2>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-md-4 col-lg-4 col-xl-2 col-sm-6 col-xs-12">
+                <label class="badge badge-warning">Receiving Mat# Status</label>
+                <select class="form-control" [(ngModel)]="status" id="status" name="status">
+                  <option value="All">All</option>
+                  <option value="Y">Y</option>
+                  <option value="N">N</option>
+                </select>
+              </div>
+              <div class="col-md-4 col-lg-4 col-xl-2 col-sm-6 col-xs-12">
+                <label class="badge badge-warning">Article</label>
+                <input type="text" placeholder="Article" name="article" class="form-control" [(ngModel)]="article">
+              </div>
+              <div class="col-md-4 col-lg-4 col-xl-2 col-sm-6 col-xs-12">
+                <label class="badge badge-warning">Tooling</label>
+                <input type="text" placeholder="Tool ID" name="tooling" class="form-control" [(ngModel)]="tooling">
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-md-4 col-lg-4 col-xl-2 col-sm-6 col-xs-12 pt-4">
+                <button type="button" class="btn btn-success btn-block" (click)="exportExcel()">
+                  <i class="fa fa-file-excel-o"></i> Excel
+                </button>
+              </div>
+              <div class="col-md-4 col-lg-4 col-xl-2 col-sm-6 col-xs-12 pt-4">
+                <button type="button" class="btn btn-warning btn-block" (click)="clear()">
+                  <i class="fa fa-times"></i> Clear
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

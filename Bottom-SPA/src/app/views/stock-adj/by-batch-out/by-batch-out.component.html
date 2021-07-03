@@ -1,0 +1,141 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <strong>2.8 Stock Adj. - Modify Detail</strong>
+          <button type="button" class="btn btn-sm btn-primary float-right" [routerLink]="'/stock-adj/main'">
+            <i class="fa fa-chevron-left"></i> Back
+          </button>
+        </div>
+        <div class="card-body">
+          <div class="form-group row">
+            <label class="col-md-2 col-form-label" for="modifyType"><strong class="float-right">Modify Type</strong></label>
+            <div class="col-md-2">
+              <select name="modifyType" 
+                class="form-control" 
+                [(ngModel)]="modifyType" 
+                (change)="changePageByBath()">
+                <option value="0">No By Batch</option>
+                <option value="1">By Batch</option>
+              </select>
+            </div>
+            <label class="col-md-2 col-form-label" for="modifyType"><strong class="float-right">Batch</strong></label>
+            <div class="col-md-2">
+              <select name="Batch" 
+                class="form-control" 
+                [(ngModel)]="batch" 
+                (change)="changeBatch()">
+                <option value="{{item}}" *ngFor="let item of listBatch">{{item}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row" *ngIf="modifyQrCodeMain !== null">
+            <label class="col-md-2 col-form-label" for="planNo"><strong class="float-right">Plan No</strong></label>
+            <div class="col-md-2">
+              <input type="text" disabled [(ngModel)]="modifyQrCodeMain.mO_No" name="mO_No" class="form-control">
+            </div>
+            <label class="col-md-2 col-form-label" for="modelNo"><strong class="float-right">Model No</strong></label>
+            <div class="col-md-2">
+              <input type="text" disabled [(ngModel)]="modifyQrCodeMain.model_No" name="model_No" class="form-control">
+            </div>
+            <label class="col-md-2 col-form-label" for="article"><strong class="float-right">Article</strong></label>
+            <div class="col-md-2">
+              <input type="text" disabled [(ngModel)]="modifyQrCodeMain.article" name="article" class="form-control">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-2 col-form-label" for="type"><strong class="float-right">Type</strong></label>
+            <div class="col-md-2">
+              <select name="type" id="type" class="form-control"
+                [(ngModel)]="typeOther" 
+                (ngModelChange)="changeOtherType()">
+                <option value="1">Other Out</option>
+                <option value="2">Other In</option>
+              </select>
+            </div>
+            <label class="col-md-2 col-form-label" for="reason"><strong class="float-right">Reason for Change</strong></label>
+            <div class="col-md-2">
+              <select name="reason" 
+                [(ngModel)]="reason" 
+                id="reason" 
+                class="form-control">
+                <option *ngFor="let item of reasons" value="{{item.hP_Reason_Code}}">{{item.hP_Reason_Code}} - {{item.reason_Ename}} - {{item.reason_Lname}}</option>
+              </select>
+            </div>
+            <label class="col-md-2 col-form-label"><strong class="float-right">Missing</strong></label>
+            <div class="col-md-2">
+                  <div style="margin-top: 8px;" class="custom-control custom-checkbox">
+                      <input type="checkbox" name="checkMissing"
+                          [(ngModel)]="checkMissing" class="custom-control-input" id="checkMissing">
+                      <label class="custom-control-label" for="checkMissing"></label>
+                  </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-2 col-form-label" for="material"><strong class="float-right">Material</strong></label>
+            <div class="col-md-9">
+              <input type="text" disabled [value]="modifyQrCodeMain.material_ID + '-' + modifyQrCodeMain.material_Name" name="article" class="form-control">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-10 offset-md-1 table-responsive">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <td>Tool Size</td>
+                  <td></td>
+                  <td *ngFor="let item of data1">{{item.tool_Size}}</td>
+                </tr>
+                <tr>
+                  <td>PO Size</td>
+                  <td></td>
+                  <td *ngFor="let item of data1">{{item.order_Size}}</td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Stock Qty (A)</td>
+                  <td>{{stockQtyATotal}}</td>
+                  <td *ngFor="let item of data1Const">{{item.totalInstockQty}}</td>
+                </tr>
+                <tr>
+                  <td>Actual Qty (B)</td>
+                  <td>{{actualQtyTotal}}</td>
+                  <td *ngFor="let item of data1; let i = index">
+                    <input min="0" style="width: 60px !important;" id="{{item.order_Size}}" name="inputInstock"
+                    (ngModelChange)="changeInput($event,i)"
+                    type="number" [(ngModel)]="item.totalInstockQty">
+                  </td>
+                </tr>
+                <tr>
+                  <td>Modify Qty (C=B-A)</td>
+                  <td>{{modifyQtyTotal}}</td>
+                  <td *ngFor="let item of data1; let i = index">{{data1[i].totalInstockQty -  data1Const[i].totalInstockQty}}</td>
+                </tr>
+                <tr *ngFor="let item of data2">
+                  <td>{{item.mO_Seq}}</td>
+                  <td>{{item.total}}</td>
+                  <td *ngFor="let item1 of item.dataDetail">
+                    <input [class.tdIsChange]="item1.isChange" style="width: 60px !important;" name="inputInstockDetail" disabled type="text" [value]="item1.totalInstockQty">
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card-footer">
+          <!-- <button type="button" class="btn btn-danger mr-2">
+            <i class="fa fa-ban"></i> Cancel
+          </button> -->
+          <button type="button" class="btn btn-success" (click)="submitTable()">
+            <i class="fa fa-check"></i> Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-clip-rotate" [fullScreen]="true">
+</ngx-spinner>
+

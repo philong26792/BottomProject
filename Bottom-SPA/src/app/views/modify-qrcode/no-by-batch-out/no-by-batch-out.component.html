@@ -1,0 +1,148 @@
+<div class="animated fadeIn">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <strong>2.8 Stock Adj. - Modify Detail</strong>
+            <button type="button" class="btn btn-sm btn-primary float-right" [routerLink]="'/modify-store/main'">
+              <i class="fa fa-chevron-left"></i> Back
+            </button>
+          </div>
+          <div class="card-body">
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label" for="modifyType"><strong class="float-right">Modify Type</strong></label>
+              <div class="col-md-2">
+                <select name="modifyType" [(ngModel)]="optionByBatch" (change)="changePageByBath()" id="modifyType" class="form-control">
+                  <option value="0">No By Batch</option>
+                  <option value="1">By Batch</option>
+                </select>
+              </div>
+              <label class="col-md-2 col-form-label"><strong class="float-right">Missing</strong></label>
+              <div class="col-md-2">
+                    <div style="margin-top: 8px;" class="custom-control custom-checkbox">
+                        <input type="checkbox" name="checkMissing"
+                            [(ngModel)]="checkMissing" class="custom-control-input" id="checkMissing">
+                        <label class="custom-control-label" for="checkMissing"></label>
+                    </div>
+              </div>
+              <label class="col-md-2 col-form-label"><strong class="float-right">Delivery No</strong></label>
+              <div class="col-md-2">
+                <select id="deliveryNo" class="form-control">
+                  <option *ngFor="let item of deliveryNos">{{item}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group row" *ngIf="modifyQrCodeMain !== null">
+              <label class="col-md-2 col-form-label" for="planNo"><strong class="float-right">Plan No</strong></label>
+              <div class="col-md-2">
+                <input type="text" disabled [(ngModel)]="modifyQrCodeMain.mO_No" name="mO_No" class="form-control">
+              </div>
+              <label class="col-md-2 col-form-label" for="modelNo"><strong class="float-right">Model No</strong></label>
+              <div class="col-md-2">
+                <input type="text" disabled [(ngModel)]="modifyQrCodeMain.model_No" name="model_No" class="form-control">
+              </div>
+              <label class="col-md-2 col-form-label" for="article"><strong class="float-right">Article</strong></label>
+              <div class="col-md-2">
+                <input type="text" disabled [(ngModel)]="modifyQrCodeMain.article" name="article" class="form-control">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label" for="type"><strong class="float-right">Type</strong></label>
+              <div class="col-md-2">
+                <select [(ngModel)]="typeOther" (change)="changeOtherType()" name="type" id="type" class="form-control">
+                  <option value="1">Other Out</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label" for="material"><strong class="float-right">Material</strong></label>
+              <div class="col-md-9">
+                <input type="text" disabled [value]="modifyQrCodeMain.material_ID + '-' + modifyQrCodeMain.material_Name" name="article" class="form-control">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-10 offset-md-1 table-responsive">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <td class="td1">Tool Size</td>
+                    <td></td>
+                    <td *ngFor="let item of data1">{{item.tool_Size}}</td>
+                  </tr>
+                  <tr>
+                    <td class="td1">PO Size</td>
+                    <td></td>
+                    <td *ngFor="let item of data1">{{item.order_Size}}</td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="td1">Stock Qty (A)</td>
+                    <td>{{stockQtyATotal}}</td>
+                    <td *ngFor="let item of data1Const">{{item.totalInstockQty}}</td>
+                  </tr>
+                  <tr>
+                    <td class="td1">Actual Qty (B)</td>
+                    <td>{{actualQtyTotal}}</td>
+                    <td *ngFor="let item of data1; let i = index">
+                      <input min="0" style="width: 60px !important;" id="{{item.order_Size}}" name="inputInstock" disabled
+                      type="number" [(ngModel)]="item.totalInstockQty">
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="td1">Modify Qty (C=B-A)</td>
+                    <td>{{-modifyQtyTotal}}</td>
+                    <td *ngFor="let item of modifyQtyList">{{-item}}</td>
+                  </tr>
+                  <ng-container *ngFor="let item of reasonDataList;let i1 = index">
+                    <tr>
+                      <td class="tdReason">{{item.reason_Code + '-' + item.reason_Name}}</td>
+                      <td>{{item.totalModifyQty}}</td>
+                      <td *ngFor="let qtyInSize of item.qtyOfSizes;let i2 = index">
+                        <input (ngModelChange)="changeInputReason($event,item,qtyInSize,i1,i2)"
+                                [class.changeInputReason]="qtyInSize.qty>0"
+                                class="style-input-reason"
+                                type="number" 
+                                [(ngModel)]="qtyInSize.qty">
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="td1">Left</td>
+                      <td>{{item.totalLeft}}</td>
+                      <td *ngFor="let itemLeft of item.qtyOfSizesLeft;let i3 = index">
+                        <input type="number" style="width: 60px !important;" (keyup)="changeInputLeftOrRight(i1,i3)"  [(ngModel)]="itemLeft.qty">
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="td1">Right</td>
+                      <td>{{item.totalRight}}</td>
+                      <td *ngFor="let itemRight of item.qtyOfSizesRight; let i4 = index">
+                        <input type="number" style="width: 60px !important;" (keyup)="changeInputLeftOrRight(i1,i4)"  [(ngModel)]="itemRight.qty">
+                      </td>
+                    </tr>
+                  </ng-container>
+                  <tr *ngFor="let item of data2">
+                    <td class="td1">{{item.mO_Seq}}</td>
+                    <td>{{item.total}}</td>
+                    <td [tooltip]="item1.modifyQty" placement="top" *ngFor="let item1 of item.dataDetail">
+                      <input  [class.tdIsChange]="item1.isChange" style="width: 60px !important;" name="inputInstockDetail" disabled type="text" [value]="item1.totalInstockQty">
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="card-footer">
+            <button type="button" (click)="cancel()" style="margin-right: 5px;" class="btn btn-danger"><i class="fa fa-ban"></i> Cancel</button>
+            <button type="button" (click)="submitTable()" class="btn btn-success">
+              <i class="fa fa-check"></i> Save
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-clip-rotate" [fullScreen]="true">
+  </ngx-spinner>
+  

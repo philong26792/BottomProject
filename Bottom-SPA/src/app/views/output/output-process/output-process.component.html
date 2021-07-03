@@ -1,0 +1,97 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card mb-0">
+        <div class="card-header">
+          <strong>2.6 Out - Proccess</strong>
+          <button type="button" class="btn btn-sm btn-primary float-right" (click)="back()">
+            <i class="fa fa-chevron-left"></i> Back
+          </button>
+        </div>
+        <form class="form-horizontal" #addAuditTypeForm="ngForm">
+          <div class="card-body">
+            <div class="form-group row">
+              <label class="col-md-2 text-right">QR Code</label>
+              <div class="col-md-3">
+                <input type="text" placeholder="QRCodeId" class="form-control" name="qrCodeId" disabled
+                  [value]="output.qrCodeId" />
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-2 text-right">Plan No</label>
+              <div class="col-md-3">
+                <input type="text" placeholder="Plan No" class="form-control" name="planNo" disabled
+                  [value]="output.planNo" />
+              </div>
+              <label class="col-md-1 text-right">Batch</label>
+              <div class="col-md-3">
+                <input type="text" placeholder="Batch" class="form-control" name="batch" disabled
+                  [value]="output.batch" />
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-2 text-right">Material No</label>
+              <div class="col-md-3">
+                <input type="text" placeholder="Material Id" class="form-control" name="matId" disabled
+                  [value]="output.matId" />
+              </div>
+              <div class="col-md-7">
+                <input type="text" placeholder="Material Name" class="form-control" name="matName" disabled
+                  [value]="output.matName" />
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-bordered text-center">
+              <tr>
+                <td colspan="2" width="30%" class="custom-thead">Tool Size</td>
+                <td class="custom-background-print" *ngFor="let item of result1">
+                  {{ item.name === "" ? "No Data" : item.name }}
+                </td>
+              </tr>
+              <tr>
+                <td class="custom-thead">InStock Qty A</td>
+                <td width = 200>{{ totalInStockQtyA }}</td>
+                <td *ngFor="let item of result2">{{ item.value }}</td>
+              </tr>
+              <tr>
+                <td class="custom-thead">Pickup Qty</td>
+                <td>{{ totalPickupQty }}</td>
+                <td *ngFor="let item of result1">{{ item.value }}</td>
+              </tr>
+              <tr>
+                <td class="custom-thead">Trans Out Qty B</td>
+                <td>{{ totalTransOutQtyB }}</td>
+                <td *ngFor="let item of result3; let i = index">
+                  <input type="number" class="text-center" style="width: 60px !important" [(ngModel)]="result3[i].value"
+                    (ngModelChange)="changeInput($event, i)" name="name-{{ result3[i] }}" id="id-{{ i }}" />
+                </td>
+              </tr>
+              <tr>
+                <td class="custom-thead">Remaining Qty C = A - B</td>
+                <td>{{ totalRemainingQty }}</td>
+                <td *ngFor="let item of result2; let i = index">
+                  {{ item.value - result3[i].value }}
+                </td>
+              </tr>
+            </table>
+          </div>
+          <div class="d-flex"></div>
+        </div>
+        <div class="card-footer">
+          <button class="btn btn-success mr-2" [disabled]="sumResult3 === 0" (click)="save()">
+            <i class="fa fa-check"></i> Save
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

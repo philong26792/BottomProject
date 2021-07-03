@@ -1,0 +1,79 @@
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <strong>2.4 Input - Print</strong>
+                </div>
+                <form class="form-horizontal" #addAuditTypeForm="ngForm">
+                    <div class="card-body">
+                        <div class="form-group row">
+                            <label class="col-md-1 col-form-label" for=""><strong class="float-right">Plan
+                                    No</strong></label>
+                            <div class="col-md-3">
+                                <input type="text" name="Plan No" class="form-control" disabled value="{{inputDetailItem.plan_No}}">
+                            </div>
+                            <label class="col-md-1 col-form-label" for="purchaseNo"><strong class="float-right">Batch </strong></label>
+                            <div class="col-md-1">
+                                <input type="text" name="Delivery No" class="form-control" disabled value="{{inputDetailItem.batch}}">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-1 col-form-label" for="fromDate"><strong class="float-right">Material
+                                    No</strong></label>
+                            <div class="col-md-2">
+                                <input type="text" name="Plan No" class="form-control" disabled value="{{inputDetailItem.mat_Id}}">
+                            </div>
+                            <div class="col-md-7">
+                                <input type="text" name="Delivery No" class="form-control" disabled value="{{inputDetailItem.mat_Name}}">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-10 offset-md-1 table-responsive">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr class="text-center">
+                                            <th colspan="2">Tool Size</th>
+                                            <th *ngFor="let item of inputDetailItem.detail_Size; let index = index">{{item.tool_Size}}</th>
+                                        </tr>
+                                        <tr class="text-center">
+                                            <th colspan="2">PO#Size</th>
+                                            <th *ngFor="let item of inputDetailItem.detail_Size; let index = index">{{item.size}}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="text-center">
+                                            <td>Accumated Qty</td>
+                                            <td>{{this.totalAccumatedQty}}</td>
+                                            <td *ngFor="let item of listAccumatedQty; let index = index">{{item}}</td>
+                                        </tr>
+                                        <tr class="text-center">
+                                            <td>Trans. In Qty</td>
+                                            <td>{{this.totalTransInQty}}</td>
+                                            <td *ngFor="let item of inputDetailItem.detail_Size; let index = index" >
+                                                <input type="number" class="width-input" 
+                                                [(ngModel)]="transInModel[index]" 
+                                                (ngModelChange)="changeInput($event, index)" 
+                                                name="name-{{transInModel[index]}}"
+                                                id="id-{{index}}">
+                                            </td>
+                                        </tr>
+                                        <tr class="text-center">
+                                            <td>InStock Qty</td>
+                                            <td>{{totalInStocQty}}</td>
+                                            <td *ngFor="let item of inputDetailItem.detail_Size; let index = index">{{transInModel[index]}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="card-footer">
+                    <button type="button" (click)="cancel()" class="btn btn-danger mr-2"><i class="fa fa-ban"></i> Cancel</button>
+                    <button type="button" *ngIf="checkSubmitMain === false"  class="btn btn-success" (click)="saveInput()"><i class="fa fa-check"></i> Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,101 @@
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <strong>2.9.1 Merge QRCode</strong>
+                </div>
+                <div class="card-body">
+                    <div class="form-group row">
+                        <label class="col-md-1 col-form-label" for="planNo"><strong class="float-right">Plan
+                                No</strong></label>
+                        <div class="col-md-2">
+                            <input type="text" id="mO_No"  [(ngModel)]="mO_No" name="mO_No" class="form-control"
+                                placeholder="Enter Plan No ..">
+                        </div>
+                        <label class="col-md-2 col-form-label" for="supplierNo"><strong class="float-right">Supplier
+                                No</strong></label>
+                        <div class="col-md-3">
+                            <ng-select2 [data]="supplierList" [options]="optionsSelectSupplier"
+                                (valueChanged)="changedSupplier($event)" [cssImport]=true [disabled]="disable"
+                                [value]="supplier_ID">
+                            </ng-select2>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-1 col-form-label" for="MaterialNo"><strong class="float-right">Material
+                            No</strong></label>
+                        <div class="col-md-2">
+                            <ng-select2 [data]="materialList" [options]="optionsSelectMaterial"
+                            (valueChanged)="changeMaterial($event)" [cssImport]=true [disabled]="disable"
+                            [value]="materialNo">
+                        </ng-select2>
+                        </div>
+                        <div class="col-md-7">
+                            <input type="text" [(ngModel)]="materialName" name="materialName" class="form-control" disabled>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="button" class="btn btn-success btn-block" (click)="search()"><i class="fa fa-search"></i>
+                                Search
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <td>QRCode ID</td>
+                                <td>Plan No</td>
+                                <td>Purchase No</td>
+                                <td>Model No</td>
+                                <td>Model Name</td>
+                                <td>Article</td>
+                                <td>Part</td>
+                                <td>T2 Supplier</td>
+                                <td>Rack Location</td>
+                                <td>Stock Qty</td>
+                            </tr>
+                        </thead>
+                        <tbody *ngIf="dataResult.length === 0">
+                            <tr>
+                                <td colspan="10">
+                                    <alert class="text-center" type="danger">
+                                        <strong>No Data Found!</strong>
+                                    </alert>
+                                </td>
+                            </tr>
+                        <tbody>
+                            <ng-container *ngFor="let item of dataResult">
+                                <tr>
+                                    <td rowspan="2">
+                                        <button class="btn btn-primary">{{item.qrCode_ID}}</button>
+                                    </td>
+                                    <td>{{item.mO_No}}</td>
+                                    <td>{{item.purchase_No}}</td>
+                                    <td>{{item.model_No}}</td>
+                                    <td>{{item.model_Name}}</td>
+                                    <td>{{item.article}}</td>
+                                    <td *ngIf="item.part_No !== '';else elsePart">{{item.part_No}}-{{item.part_Name}}</td>
+                                    <ng-template #elsePart>
+                                        <td></td>
+                                    </ng-template>
+                                    <td>{{item.supplier_ID}}  {{item.supplier_Name}}</td>
+                                    <td>{{item.rack_Location}}</td>
+                                    <td>{{item.stock_Qty}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-center" style="color: red;" colspan="9">{{item.material_ID}} - {{item.material_Name}}</td>
+                                </tr>
+                            </ng-container>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-footer">
+                    <button type="button" style="margin-right: 5px;" class="btn btn-danger"><i class="fa fa-ban"></i> Cancel</button>
+                    <button type="button" (click)="mergeQRCode()" class="btn btn-success"><i class="fa fa-check"></i> Merge QRCode</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

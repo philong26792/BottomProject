@@ -1,0 +1,117 @@
+<div class="app-body">
+  <main class="main">
+    <div class="container-fluid animated fadeIn">
+      <div class="row">
+        <div class="col-8 pt-3">
+          <strong class="text title">By PO Detail</strong>
+        </div>
+        <div class="col-4 mt-3 mb-3">
+          <a href="javascript:;" class="btn btn-back btn-dark float-right" [routerLink]="['/kanban/by-po/main']">
+            <span>
+              <i class="fa fa-chevron-left"></i>
+              <span> Back</span>
+            </span>
+          </a>
+          <span class="text-white float-right mr-3 time mt-1">{{time | date : 'yyyy/MM/dd hh:mm:ss a'}}</span>
+        </div>
+      </div>
+      <div class="line-gradient mb-4"></div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <form class="form-horizontal">
+              <div class="card-body template-fix1">
+                <div class="form-group row">
+                  <div class="col-md-2">
+                    STF: {{kanbanByPo.date | date: 'yyyy/MM/dd'}}
+                  </div>
+                  <div class="col-md-1">
+                    CELL: {{kanbanByPo.cell}}
+                  </div>
+                  <div class="col-md-2">
+                    PO+Batch: {{kanbanByPo.mO_No}} {{kanbanByPo.mO_Seq}}
+                  </div>
+                  <div class="col-md-2">
+                    Model Name: {{kanbanByPo.model_Name}}
+                  </div>
+                  <div class="col-md-2">
+                    Art#: {{kanbanByPo.article}}
+                  </div>
+                  <div class="col-md-2">
+                    Plan Qty: {{kanbanByPo.prs}}
+                  </div>
+                  <div class="col-md-1">
+                    <button type="button" class="btn btn-success btn-block" (click)="exportExcelDetailWithSize()">
+                      <i class="fa fa-file-excel-o"></i>
+                      Excel
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="row mb-2">
+        <div class="text-white col-12" *ngIf="!nodata">
+          <span class="mr-5">Accept. Setting Qty: {{kanbanByPo.rev_Qty}}</span>
+          <span>Current setting In. Qty: {{kanbanByPo.stk_Qty}}</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <div class="card table-responsive">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>No</th>
+                  <th>Expected Delivery Date</th>
+                  <th>T2 Supplier</th>
+                  <th>Rack Location</th>
+                  <th>Material No</th>
+                  <th>Material Name</th>
+                  <th>Parts</th>
+                  <th>Name</th>
+                  <th>Total Pairs</th>
+                </tr>
+              </thead>
+              <tbody class="template-fix1">
+                <ng-container *ngFor="let item of listKanbanByPoDetail; let i = index">
+                  <tr [class.background-green]="item.source_Count > 1">
+                    <td rowspan="3" class="align-middle">{{i + 1}}</td>
+                    <td rowspan="3" class="align-middle">{{item.confirm_Date | date: 'yyyy/MM/dd'}}</td>
+                    <td rowspan="3" class="align-middle">{{item.t2_Supplier}} {{item.t2_Supplier_Name}}</td>
+                    <td rowspan="3" class="align-middle">{{item.rack_Location}}</td>
+                    <td rowspan="3" class="align-middle">{{item.material_NO}}</td>
+                    <td rowspan="3" class="align-middle">{{item.material_Name}}</td>
+                    <td rowspan="3" class="align-middle">{{item.customerPart}}</td>
+                    <td>Qty</td>
+                    <td>{{item.prs}}</td>
+                  </tr>
+                  <tr [class.background-green]="item.source_Count > 1">
+                    <td><span class="text-decoration" (click)="gotoDetailByReceivingType(item)">Rev_Prs</span></td>
+                    <td>{{item.revQty}}</td>
+                  </tr>
+                  <tr [class.background-green]="item.source_Count > 1">
+                    <td>Stk_Prs</td>
+                    <td>{{item.stkQty}}</td>
+                  </tr>
+                </ng-container>
+                <tr *ngIf="nodata">
+                  <td colspan="10">
+                    <div class="alert-table alert alert-waring ">
+                      No data found !
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-clip-rotate" [fullScreen]="true">
+</ngx-spinner>

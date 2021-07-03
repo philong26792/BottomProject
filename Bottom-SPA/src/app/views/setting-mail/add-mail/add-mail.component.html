@@ -1,0 +1,123 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <strong>1.2 T3 Supplier - Add/Edit </strong>
+          <button type="button" class="btn  btn-primary float-right" [routerLink]="['/rack/setting-mail/list-mail']"
+            routerLinkActive="router-link-active">
+            <i class="fa fa-chevron-left"></i>
+            Back
+          </button>
+        </div>
+        <form class="form-horizontal" #addSettingMail="ngForm" (ngSubmit)="addSettingMail.valid">
+          <div class="card-body">
+            <div class="form-group row">
+              <label class="col-sm-2 col-lg-1 col-form-label "><strong>
+                  Factory
+                </strong> </label>
+              <div class="col-sm-4  col-lg-4">
+                <ng-select2 [data]="listDataFactory" name="Factory" [disabled]="true"
+                  [value]="settingMailSupplier.factory" [(ngModel)]="settingMailSupplier.factory" width="100%">
+                </ng-select2>
+              </div>
+
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-2 col-lg-1 col-form-label "><strong>
+                  Supplier No
+                </strong> </label>
+              <div class="col-sm-4  col-lg-4">
+                <ng-select2 [data]="listDataSupplier" name="Supplier" [disabled]="checkSave" required
+                  (ngModelChange)="changeSupplier($event)"
+                   [value]="settingMailSupplier.supplier_No"
+                  [(ngModel)]="settingMailSupplier.supplier_No" width="100%">
+                </ng-select2>
+              </div>
+              <label class="col-sm-2 col-lg-1 col-form-label "><strong>
+                  Contact Person
+                </strong> </label>
+              <div class="col-sm-4  col-lg-4">
+                <input type="text" class="form-control" [(ngModel)]="settingMailSupplier.contact_Persion" 
+                  name="Contact">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-2 col-lg-1 col-form-label "><strong>
+                  Supplier Name
+                </strong> </label>
+              <div class="col-sm-4  col-lg-4">
+                <input type="text" class="form-control" disabled [(ngModel)]="settingMailSupplier.supplier_Name"
+                  required name="Supplier CN">
+              </div>
+              <label class="col-sm-2 col-lg-1 col-form-label "><strong>Phone</strong></label>
+              <div class="col-sm-4  col-lg-4">
+                <input type="text" class="form-control" [(ngModel)]="settingMailSupplier.phone" name="Phone" >
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-sm-2 col-lg-1 col-form-label "><strong>
+                Process ID
+                </strong> </label>
+              <div class="col-sm-4  col-lg-4">
+                <ng-select2 [data]="listSubcon" name="SubconId"  required [disabled]="checkSave"    (ngModelChange)="changeSubcon($event)"
+                  [value]="settingMailSupplier.subcon_ID" [(ngModel)]="settingMailSupplier.subcon_ID" width="100%">
+                </ng-select2>
+              </div>
+              <label class="col-sm-2 col-lg-1 col-form-label "><strong>
+                  Process Name
+                </strong></label>
+              <div class="col-sm-4  col-lg-4">
+                <input type="text" class="form-control" disabled required [(ngModel)]="settingMailSupplier.subcon_Name"
+                  name="Subcon Name">
+              </div>
+            </div>
+
+
+            <div class="form-group row">
+              <label class="col-sm-2 col-lg-1 col-form-label "><strong>
+                  Email
+                </strong> </label>
+              <div class="col-sm-4  col-lg-4">
+                <textarea class="form-control" required [(ngModel)]="settingMailSupplier.email" name="email" rows="5"></textarea>
+              </div>
+              <label class="col-sm-2 col-lg-1 col-form-label "><strong>
+                  Subject
+                </strong> </label>
+              <div class="col-sm-4  col-lg-4">
+                <input type="text" class="form-control" name="subject" required
+                  [(ngModel)]="settingMailSupplier.subject">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-2 col-lg-1 col-form-label "><strong>
+                  Content
+                </strong> </label>
+              <div class="col-sm-8  col-lg-9">
+                <textarea class="form-control" name="Content" required [(ngModel)]="settingMailSupplier.content">
+
+                </textarea>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer">
+            <div class="form-group row">
+              <div class="col">
+                <button type="button" class="btn btn-danger mr-1" (click)="cancel()" *ngIf="!checkSave">
+                  <i class="fa fa-ban"></i>
+                  Cancel
+                </button>
+                <button type="button" class="btn btn-success mr-1" (click)="save()"
+                  [disabled]="!addSettingMail.valid">
+                  <i class="fa fa-check"></i>
+                  Save
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

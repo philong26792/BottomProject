@@ -1,0 +1,111 @@
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card mb-0">
+                <div class="card-header">
+                    <strong>5.6 Compare Report</strong>
+                </div>
+                <form class="form-horizontal">
+                    <div class="card-body">
+                        <div class="form-group row">
+                            <label class="col-md-1 col-form-label" for="kind"><strong
+                                    class="float-left">Kind</strong></label>
+                            <div class="col-md-2">
+                                <select disabled name="" id="" class="form-control">
+                                    <option value="">Bottom</option>
+                                </select>
+                            </div>
+                            <label class="col-md-2 col-form-label" for="closingDate"><strong class="float-left">Closing
+                                    Date</strong></label>
+                            <div class="col-md-2">
+                                <div class="input-group">
+                                    <input type="text" placeholder="Date" class="form-control" bsDatepicker
+                                        [bsConfig]="bsConfig" [(ngModel)]="receive_Date" name="receive_Date" />
+                                    <span class="input-group-append">
+                                        <button class="btn btn-primary" type="button" disabled>
+                                            <i class="fa fa-calendar"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <button type="button" class="btn btn-success btn-block" (click)="search()">
+                                    <i class="fa fa-search"></i>
+                                    Search
+                                </button>
+                            </div>
+                            <div class="col-md-2">
+                                <button type="button" class="btn btn-primary btn-block" (click)="exportExcel()">
+                                    <i class="fa fa-download"></i>
+                                    Download
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body table-responsive">
+                        <table class="table table-bordered ">
+                            <thead>
+                                <tr>
+                                    <th>Plan No</th>
+                                    <th>Model No</th>
+                                    <th>Model Name</th>
+                                    <th>Article</th>
+                                    <th>Material No</th>
+                                    <th>Material Name</th>
+                                    <th>HP WH</th>
+                                    <th>A.WMS Rec Date</th>
+                                    <th>B.HP Rec Date</th>
+                                    <th>C.WMS Accu. Rec Qty</th>
+                                    <th>D.HP Accu. Rec Qty</th>
+                                    <th>E.Balance(C-D)</th>
+                                    <th>Coverage Score</th>
+                                    <th>Accuracy Score</th>
+                                    <th>Supplier</th>
+                                </tr>
+                            </thead>
+                            <tbody *ngIf="stockCompares.length === 0">
+                                <tr>
+                                    <td colspan="15">
+                                        <alert class="text-center" type="danger">
+                                            <strong>No Data Found!</strong>
+                                        </alert>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tbody>
+                                <ng-container *ngFor="let item of stockCompares">
+                                    <tr [class.background-yellow]="item.coverage === 0 || item.accuracy === 0">
+                                        <td>{{item.mO_No}}</td>
+                                        <td>{{item.model_No}}</td>
+                                        <td>{{item.model_Name}}</td>
+                                        <td>{{item.article}}</td>
+                                        <td>{{item.material_ID}}</td>
+                                        <td>{{item.material_Name}}</td>
+                                        <td>{{item.hP_WH}}</td>
+                                        <td>{{item.a_WMS_Rec_Date | date: 'dd/MM/yyyy'}}</td>
+                                        <td>{{item.b_HP_Rec_Date | date: 'dd/MM/yyyy'}}</td>
+                                        <td>{{item.c_WMS_Accu_Rec_Qty}}</td>
+                                        <td>{{item.d_HP_Accu_Rec_Qty}}</td>
+                                        <td>{{item.e_Balance}}</td>
+                                        <td>{{item.coverage}}</td>
+                                        <td>{{item.accuracy}}</td>
+                                        <td>{{item.supplier}}</td>
+                                    </tr>
+                                </ng-container>
+                                
+                            </tbody>
+                        </table>
+                        <div class="d-flex">
+                            <pagination *ngIf="stockCompares.length > 0" [boundaryLinks]="true"
+                                [totalItems]="pagination.totalItems" [(ngModel)]="pagination.currentPage"
+                                [itemsPerPage]="pagination.itemsPerPage" (pageChanged)="pageChanged($event)"
+                                previousText="&lsaquo;" name="pagigation" nextText="&rsaquo;" firstText="&laquo;"
+                                lastText="&raquo;" [maxSize]=5>
+                            </pagination>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

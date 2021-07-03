@@ -1,0 +1,74 @@
+<div class="animated fadeIn">
+  <!--/.row-->
+  <div class="row">
+    <!--/.col-->
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <strong>2.1.1 Receiving Mat# A - Manage</strong>
+          <div class="float-right">
+            <button style="margin-right: 5px;" type="button" *ngIf="checkButtonAdd === true; else elseStatus" 
+            (click)="changeForm()" class="btn btn-sm btn-primary">
+              <i class="fa fa-plus"></i>
+              Add new
+            </button>
+            <ng-template #elseStatus>
+              <button type="button" disabled class="btn btn-sm btn-primary">
+                <i class="fa fa-plus"></i>
+                Add new
+              </button>
+            </ng-template>
+            <button (click)="backForm()" type="button" class="btn btn-sm btn-secondary">
+              <i class="fa fa-chevron-left"></i>
+              Back
+            </button>
+          </div>
+        </div>
+        <div class="card-body">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Plan No</th>
+                <th>Purchase No</th>
+                <th>Receive No</th>
+                <th>Batch</th>
+                <th>Receive Time</th>
+                <th>Purchase Qty</th>
+                <th>Accumated Qty</th>
+                <th>Type</th>
+                <th>Update By</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody *ngIf="receiveNoMain !== undefined">
+             <ng-container *ngFor="let item of receiveNoMain; let index = index">
+              <tr>
+                <td class="text-center vertical-middle">{{item.mO_No}}</td>
+                <td class="text-center vertical-middle">{{item.purchase_No}}</td>
+                <td class="text-center vertical-middle">{{item.receive_No}}</td>
+                <td class="text-center vertical-middle">{{item.mO_Seq}}</td>
+                <td class="text-center vertical-middle">{{item.receive_Date | date: "MM/dd/yyyy, HH:mm:ss"}}</td>
+                <td class="text-center vertical-middle">{{item.purchase_Qty}}</td>
+                <td class="text-center vertical-middle">{{item.accumated_Qty}}</td>
+                <td class="text-center vertical-middle">{{item.sheet_Type}}</td>
+                <td class="text-center vertical-middle">{{item.updated_By}}</td>
+                <td class="text-center vertical-middle">
+                  <button (click)="changeFormDetail(item)" class="btn btn-block btn-success">Show Detail</button>
+                  <button (click)="editReceiveNo(item)" 
+                  class="btn btn-block btn-warning" 
+                  *ngIf="item.generated_QRCode === 'N' && item.purchase_Qty !== item.accumated_Qty_All">Edit</button>
+                </td>
+              </tr>
+            </ng-container>
+            </tbody>
+          </table>
+          <div class="d-flex">
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--/.col-->
+  </div>
+</div>
+

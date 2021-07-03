@@ -1,0 +1,77 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <strong>1.2 T3 Supplier</strong>
+          <button class="btn btn-primary float-right" (click)="addAndEdit(null,false)" routerLinkActive="router-link-active" >
+            <i class="fa fa-plus"></i>
+            Add
+          </button>
+        </div>
+        <div class="card-body">
+
+          <div class="form-group row">
+            <label class="col-md-2 col-form-label" for="fromDate"><strong class="float-right">Factory
+                </strong></label>
+            <div class="col-md-3">
+              <ng-select2 [data]="listFactory" [disabled]="true" [value]="factory" width="100%"></ng-select2>
+              
+            </div>
+            <label class="col-md-2 col-form-label" for="fromDate"><strong class="float-right">Supplier No
+                </strong></label>
+            <div class=" col-md-3">
+
+              <ng-select2 [data]="listSupplierNo"  [(ngModel)]="supplierNo"  width="100%"></ng-select2>
+            </div>
+            <div class="col-md-2" >
+              <button class="btn btn-primary" (click) = "getListSettingMail()">
+                <i class="fa fa-search"></i>
+                Search</button>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table class="table table-bordered ">
+              <thead>
+                <tr>
+                  <td>Supplier No</td>
+                  <td>Supplier Name</td>
+                  <td>Process </td>
+                  <td>Contact person</td>
+                  <td>Email</td>
+                  <td></td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of listMail">
+                  <td>{{item.supplier_No}}</td>
+                  <td>{{item.supplier_Name}}</td>
+                  <td>{{item.subcon_ID}} - {{item.subcon_Name}}</td>
+                  <td>{{item.contact_Persion}}</td>
+                  <td>{{item.email}}</td>
+                  <td class="font-table align-middle arow" style='white-space: nowrap'>
+                    <button class="btn btn-primary" (click)="addAndEdit(item,true)"><i class="fa fa-pencil"></i> Edit</button>
+                    <button class="btn btn-danger ml-2" (click)="delete(item)"><i class="fa fa-trash"></i> Delete</button>
+                  </td>
+                </tr>
+                <tr *ngIf="listMail.length==0">
+                  <td colspan="7">
+                    <div class="alert-table alert alert-waring ">
+                      No data found !
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="d-flex" *ngIf="pagination.totalPages > 1">
+            <pagination [totalItems]="pagination.totalItems" [(ngModel)]="pagination.currentPage"
+              [itemsPerPage]="pagination.itemsPerPage" (pageChanged)="pageChanged($event)" previousText="&lsaquo;"
+              nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;" [maxSize]=5>
+            </pagination>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

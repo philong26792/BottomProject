@@ -1,0 +1,81 @@
+<app-header [navbarBrandRouterLink]="['/dashboard']" [fixed]="true"
+  [navbarBrandFull]="{src: 'assets/img/logo/LogoSYF.png', width: 60, height: 40, alt: 'Logo'}" WH
+  [navbarBrandMinimized]="{src: 'assets/img/logo/LogoSYF.png', width: 30, height: 30, alt: 'Logo'}"
+  [sidebarToggler]="'lg'" [asideMenuToggler]="''">
+  <ul class="nav navbar-nav d-md-down-none">
+    <li class="nav-item px-3 text-color-white ">
+      <h3>Warehouse Management System</h3>
+    </li>
+  </ul>
+  <ul class="nav navbar-nav ml-auto">
+    <!-- <li class="nav-item d-md-down-none">
+      <a class="nav-link" href="#"><i class="icon-bell"></i><span class="badge badge-pill badge-danger">5</span></a>
+    </li> -->
+
+    <span class="top-menu group-hp-info mr-2">
+      <button type="button" [ngClass]="{btn:true,'button-radius-top':true,'btn-success':color=='',
+      'btn-success1':color!=''}"
+      >Version <span class="badge">{{hpUploadTimeLog.version}}</span></button>
+      <button type="button" class="ml-1" [ngClass]="{btn:true,'button-radius-top':true,'btn-success':color=='',
+      'btn-success1':color!=''}">UpLoad Time <span class="badge">{{hpUploadTimeLog.upload_Time | date: 'yyyy-MM-dd HH:mm:ss'}}</span></button>
+    </span>
+    <li class="nav-item dropdown mr-30" dropdown placement="bottom right">
+      <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"
+        dropdownToggle (click)="false">
+        <span class="text-white" style="text-decoration: none; cursor: pointer;">{{user.name}}</span>
+        <!-- <span class="text-white" style="text-decoration: none; cursor: pointer;">Name Test</span> -->
+        <!-- <img src="assets/img/avatars/user.png" class="img-avatar" alt="admin@bootstrapmaster.com" /> -->
+      </a>
+      <div class="dropdown-menu dropdown-menu-right" *dropdownMenu aria-labelledby="simple-dropdown">
+        <!-- <div class="dropdown-header text-center"><strong>Settings</strong></div>
+        <a class="dropdown-item" href="#"><i class="fa fa-user"></i> Profile</a>
+        <a class="dropdown-item" href="#"><i class="fa fa-wrench"></i> Setting</a>
+        <div class="divider"></div> -->
+        <a class="dropdown-item" href="javascript:;" (click)="logout()"><i class="fa fa-lock"></i> Back to WMS</a>
+      </div>
+    </li>
+  </ul>
+</app-header>
+<div class="app-body">
+  <app-sidebar #appSidebar [fixed]="true" [display]="'lg'" [minimized]="sidebarMinimized"
+    (minimizedChange)="toggleMinimize($event)">
+    <app-sidebar-nav [navItems]="navItems" [perfectScrollbar] [disabled]="appSidebar.minimized"></app-sidebar-nav>
+    <app-sidebar-minimizer></app-sidebar-minimizer>
+  </app-sidebar>
+  <!-- Main content -->
+  <main class="main">
+    <!-- Breadcrumb -->
+    <!-- breaking change 'cui-breadcrumb' -->
+    <!-- <cui-breadcrumb>-->
+    <!-- Breadcrumb Menu-->
+    <!-- <li class="breadcrumb-menu d-md-down-none">
+        <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+          <a class="btn" href="#"><i class="icon-speech"></i></a>
+          <a class="btn" [routerLink]="['/dashboard']"><i class="icon-graph"></i> &nbsp;Dashboard</a>
+          <a class="btn" href="#"><i class="icon-settings"></i> &nbsp;Settings</a>
+        </div>
+      </li>
+    </cui-breadcrumb>-->
+    <!-- deprecation warning for 'app-breadcrumb' -->
+    <!--<ol class="breadcrumb">-->
+    <!--<app-breadcrumb></app-breadcrumb>-->
+    <!--&lt;!&ndash; Breadcrumb Menu&ndash;&gt;-->
+    <!--<li class="breadcrumb-menu d-md-down-none">-->
+    <!--<div class="btn-group" role="group" aria-label="Button group with nested dropdown">-->
+    <!--<a class="btn" href="#"><i class="icon-speech"></i></a>-->
+    <!--<a class="btn" [routerLink]="['/dashboard']"><i class="icon-graph"></i> &nbsp;Dashboard</a>-->
+    <!--<a class="btn" href="#"><i class="icon-settings"></i> &nbsp;Settings</a>-->
+    <!--</div>-->
+    <!--</li>-->
+    <!--</ol>-->
+    <div class="container-fluid pt-30">
+      <router-outlet></router-outlet>
+    </div><!-- /.container-fluid -->
+  </main>
+
+</div>
+<app-footer>
+  <span>Copyright &copy; 2020 <a href="javascript:;">SHYANG SHIN BAO INDUSTRIAL CO., LTD.</a> All rights reserved</span>
+  <span class="ml-auto">Powered by <a href="javascript:;">SD3</a></span>
+</app-footer>
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "ball-clip-rotate" [fullScreen] = "true"></ngx-spinner> 

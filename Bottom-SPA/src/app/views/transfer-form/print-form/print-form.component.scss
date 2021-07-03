@@ -1,0 +1,11 @@
+@media print {
+    .print-all {
+      display: block;
+      page-break-before: always;
+    }
+  }
+
+  .table th, .table td {
+    padding-top: 0.6rem;
+    padding-bottom: 0.6rem;
+  }

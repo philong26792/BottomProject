@@ -1,0 +1,11 @@
+Time: 27/03/2021 09:28:42 AM
+-----------------------------------------------------------
+Message: Input string was not in a correct format.
+StackTrace:    at System.Number.ThrowOverflowOrFormatException(ParsingStatus status, TypeCode type)
+   at System.Number.ParseInt32(ReadOnlySpan`1 value, NumberStyles styles, NumberFormatInfo info)
+   at System.Int32.Parse(String s)
+   at Bottom_API.Controllers.MemoryCacheController.GetsqlStoreNotResult() in G:\Project\Github\WH_Bottom_SD3\tfs\WarehouseBottom\Bottom-API\Controllers\MemoryCacheController.cs:line 124
+Source: System.Private.CoreLib
+TargetSite: Void ThrowOverflowOrFormatException(ParsingStatus, System.TypeCode)
+-----------------------------------------------------------
+

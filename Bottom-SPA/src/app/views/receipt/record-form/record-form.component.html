@@ -1,0 +1,96 @@
+
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <strong>2.1.1 Receiving Mat# A - Add</strong>
+          <button type="button" (click)="backForm()" class="btn btn-sm btn-primary float-right"><i class="fa fa-chevron-left"></i>
+            Back</button>
+        </div>
+        <form class="form-horizontal" #addAuditTypeForm="ngForm">
+          <div class="card-body">
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label" for="fromDate"><strong class="float-right">Delivery Type</strong></label>
+              <div class="col-md-3">
+                <select class="form-control" 
+                (change)= "changeForm()"
+                [(ngModel)]="type" 
+                id="status" name="status">
+                  <option value="No Batch">No Batch</option>
+                  <option value="Batches">Batches</option>
+                </select>
+              </div>
+              <label class="col-md-2 col-form-label" for="purchaseNo"><strong
+                  class="float-right">Delivery No </strong></label>
+              <div class="col-md-3">
+                <input type="text" name="Delivery No" class="form-control" [(ngModel)]="delivery_No">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-10 offset-md-1 table-responsive">
+                <table class="table table-bordered">
+                  <thead>
+                    <tr class="text-center">
+                      <th colspan="2">Tool Size</th>
+                      <th *ngFor="let item of materialMerging"> {{item.tool_Size}}</th>
+                    </tr>
+                    <tr class="text-center">
+                      <th colspan="2">PO#Size</th>
+                      <th *ngFor="let item of materialMerging"> {{item.order_Size}}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="text-center">
+                      <td>Purchase Qty</td>
+                      <td *ngIf="listTotalQty !== undefined && listTotalQty !== null">{{listTotalQty.totalPurchaseQty}}</td>
+                      <td *ngFor="let item of materialMerging">
+                        {{item.purchase_Qty}}
+                      </td>
+                    </tr>
+                    <tr class="text-center">
+                      <td>Accumated Qty</td>
+                      <td *ngIf="listTotalQty !== undefined && listTotalQty !== null">{{listTotalQty.totalAccumated_Qty}}</td>
+                      <td *ngFor="let item of materialMerging">{{item.accumlated_In_Qty}}</td>
+                    </tr>
+                    <tr class="text-center">
+                      <td>Delivery Qty</td>
+                      <td *ngIf="listTotalQty !== undefined && listTotalQty !== null">{{listTotalQty.totalDeliveryQty}}</td>
+                      <td *ngFor="let item of materialMerging;let i = index">
+                        <input
+                        (change)="changeInput(item.order_Size)"
+                        value="{{item.delivery_Qty}}"
+                        type="number" min="0" id="{{item.order_Size}}" class="input-table">
+                      </td>
+                    </tr>
+                    <tr *ngFor="let item of orderSizeByBatch" class="text-center">
+                      <td *ngIf="item.mO_Seq !== ''; else elseContent">{{item.mO_Seq}}</td>
+                      <ng-template #elseContent><td>No Batch</td></ng-template>
+                      <ng-container *ngFor="let itemTotal of totalByBatch">
+                        <ng-container *ngIf="itemTotal.mO_Seq === item.mO_Seq">
+                          <td>{{itemTotal.total}}</td>
+                        </ng-container>
+                      </ng-container>
+                      <td *ngFor="let item1 of item.purchase_Qty">
+                        <input value="{{item1.purchase_Qty}}" type="text" disabled class="input-table">
+                    </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </form>
+        <div class="card-footer">
+          <button type="button" (click)="cancel()" style="margin-right: 5px;" class="btn btn-danger"><i class="fa fa-ban"></i> Cancel</button>
+          <button type="button" *ngIf="checkSubmit === false; else elseSubmit" (click)="submitTable()" class="btn btn-success"><i
+              class="fa fa-check"></i> Save</button>
+              <ng-template #elseSubmit>
+                <button type="button" class="btn btn-success" disabled><i
+                  class="fa fa-check"></i> Save</button>
+              </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

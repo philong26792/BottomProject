@@ -1,0 +1,98 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <strong>1.3 Reason</strong>
+        </div>
+        <div class="card-body">
+          <div class="row mt-2">
+            <label class="col-md-1 col-form-label" for="ReasonCode"> Reason code </label>
+            <div class="col-md-2">
+              <ng-select2 [data]="listReasonCode" [(ngModel)]="reasonCode" width="100%" name="active">
+              </ng-select2>
+            </div>
+            <label class="col-md-1 col-form-label">Reason Name</label>
+            <div class="col-md-2">
+              <input type="text" id="defectreasonid" [(ngModel)]="reasonName" class="form-control model-search"
+                placeholder="Reason" required />
+            </div>
+            <label class="col-md-1 col-form-label" for="active"> Transfer to HP </label>
+            <div class="col-md-2">
+              <select [(ngModel)]="trans_toHP" class="form-control" id="active">
+                <option value="all">All</option>
+                <option value="Y">Y</option>
+                <option value="N">N</option>
+              </select>
+            </div>
+            <div class="col-md-3">
+              <button type="button" class="btn btn-secondary" (click)="search()">
+                <i class="fa fa-search"></i> Search
+              </button>
+              <button type="button" class="btn btn-danger ml-1" (click)="clearSearch()">
+                <i class="fa fa-ban"></i>
+                <span>Clear</span>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <button class="btn btn-primary float-right mb-2" (click)="addOrEdit(null,false)">
+            <i class="fa fa-plus"></i>
+            Add
+          </button>
+          <div class="table-responsive ">
+            <table class="table table-bordered ">
+              <thead>
+                <tr>
+                  <td>Kind</td>
+                  <td>Kind Name</td>
+                  <td>Reason Code</td>
+                  <td>HP Reason Code</td>
+                  <td>Reason English Name</td>
+                  <td>Reason Local Name</td>
+                  <td>Transfer To HP</td>
+                  <td>Is Shortage</td>
+                  <td></td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of listReason">
+                  <td>{{item.kind}}</td>
+                  <td>{{item.kind_Name}}</td>
+                  <td>{{item.reason_Code}}</td>
+                  <td>{{item.hP_Reason_Code}}</td>
+                  <td>{{item.reason_Ename}}</td>
+                  <td>{{item.reason_Lname}}</td>
+                  <td>{{item.trans_toHP == 'Y'?'Y':'N'}} </td>
+                  <td>{{item.is_Shortage == 'Y'?'Y':'N'}} </td>
+                  <td class="font-table align-middle arow" style='white-space: nowrap'>
+                    <button class="btn btn-primary" (click)="addOrEdit(item,true)">
+                      <i class="fa fa-pencil"></i>
+                      Edit
+                    </button>
+                    <button class="btn btn-danger ml-2" (click)="deleteReason(item)">
+                      <i class="fa fa-trash"></i>
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="7" *ngIf="listReason.length===0">
+                    <div class="alert-table alert alert-waring ">No data found !</div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="d-flex" *ngIf="pagination.totalPages > 1">
+            <pagination [totalItems]="pagination.totalItems" [(ngModel)]="pagination.currentPage"
+              [itemsPerPage]="pagination.itemsPerPage" (pageChanged)="pageChanged($event)" previousText="&lsaquo;"
+              nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;" [maxSize]=5>
+            </pagination>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

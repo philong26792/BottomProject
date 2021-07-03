@@ -1,0 +1,13 @@
+.tr-content {
+    text-align: center;
+    vertical-align: middle;
+}
+.td-button {
+    width: 100px;
+}
+.center-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

@@ -1,0 +1,98 @@
+<div class="app-body">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="row mt-3">
+          <strong class="col-8 title">Po List Detail</strong>
+          <div class="col-4 mb-3">
+            <a
+              href="javascript:;"
+              class="btn btn-back btn-dark float-right"
+              (click)="back()"
+            >
+              <span
+                ><i class="fa fa-chevron-left"></i>
+                <span>
+                  Back
+                </span></span
+              ></a
+            >
+            <span class="text-white float-right mr-3 time mt-1">{{
+              time | date: "yyyy/MM/dd hh:mm:ss a"
+            }}</span>
+          </div>
+        </div>
+        <div class="line-gradient mb-4"></div>
+          <div class="row head-seclect-show mt-4">
+            <div class="col-md-2 col-6">
+              <input type="text" class="form-control txt-brand" disabled [value]="'TTL PRS: ' + transacted_Qty_Sum" />
+            </div>
+            <div class="col-md-2 col-6">
+              <input type="text" class="form-control txt-brand" disabled [value]='rackLocation' />
+            </div>
+            <div class="col-md-2 col-6">
+              <input type="text" class="form-control txt-brand" disabled [value]="'PO: ' + pO_Qty" />
+            </div>
+            <div class="col-md-6 col-6">
+              <button type="button" (click)="exportExcelRackDetail()" class="btn btn-sm btn-success btn-excel float-right">
+                <i class="fa fa-file-excel-o"></i> Excel
+              </button>
+            </div>
+        </div>
+          <div class="card table-responsive mt-3">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>Tooling</th>
+                  <th>PO+BATCH</th>
+                  <th>MTRL.Code</th>
+                  <th>Material Name</th>
+                  <th>Unit</th>
+                  <th>Model Name</th>
+                  <th>Article</th>
+                  <th>Parts</th>
+                  <th class="text-right">Qty</th>
+                  <th>T2 Supplier</th>
+                  <th>T3 Supplier</th>
+                  <th>ASY Line</th>
+                  <th>Start STF Date </th>
+                </tr>
+              </thead>
+              <tbody class="template-fix1">
+                <tr *ngFor="let item of rackDetails">
+                  <td class="align-middle">{{item.tooling}} </td>
+                  <td class="align-bottom">{{item.poBatch}} </td>
+                  <td class="align-bottom">{{item.mtrlCode}}</td>
+                  <td class="align-bottom">{{item.materialName}}</td>
+                  <td class="align-bottom">{{item.unit}}</td>
+                  <td class="align-bottom">{{item.model}}</td>
+                  <td class="align-bottom">{{item.article}}</td>
+                  <td class="align-bottom">{{item.customerPart}}</td>
+                  <td class="align-bottom text-right">{{item.qty}}</td>
+                  <td class="align-bottom">{{item.t2_Supplier}} </td>
+                  <td class="align-bottom">{{item.t3_Supplier}} </td>
+                  <td class="align-bottom">{{item.aslLine}}</td>
+                  <td class="align-bottom">{{item.stfStartDate | date: "yyyy/MM/dd"}}</td>
+                </tr>
+                <tr *ngIf="noData">
+                  <td colspan="13">
+                    <div class="alert-table alert alert-waring ">
+                      No data found !
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="d-flex" *ngIf="pagination.totalPages > 1">
+            <pagination [boundaryLinks]="true" [totalItems]="pagination.totalItems" [(ngModel)]="pagination.currentPage"
+              [itemsPerPage]="pagination.itemsPerPage" (pageChanged)="pageChanged($event)" previousText="&lsaquo;"
+              nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;" [maxSize]="5">
+            </pagination>
+          </div>
+        <div class="col-2 mt-5 mb-5"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "ball-clip-rotate" [fullScreen] = "true"></ngx-spinner>

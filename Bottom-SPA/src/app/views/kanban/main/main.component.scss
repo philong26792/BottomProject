@@ -1,0 +1,61 @@
+.app-body {
+  background-color: #14131d !important;
+  height: 100vh;
+  font-family: Century Gothic Regular, sans-serif;
+}
+
+@media (max-width: 991.98px) {
+  .app-body {
+    margin-top: 0px;
+  }
+}
+// màn hình full hd cho kanban main to ra
+@media (min-width: 1920px) {
+  .aaa {
+    font-size: 75px !important;
+  }
+  .button1,
+  .button2,
+  .button3 {
+    padding: 15px 30px !important;
+    width: 450px !important;
+    height: 450px !important;
+    font-size: 50px !important;
+  }
+  .button-container {
+    max-width: 1600px;
+  }
+}
+
+.line-gradient {
+  height: 5px;
+  background-image: linear-gradient(to top right, #0ff3a6, #c909f4);
+}
+
+.button1,
+.button2,
+.button3 {
+  padding: 10px 20px;
+  font-size: 35px;
+  text-align: center;
+  font-weight: 200;
+  font-family: "Noto Sans TC", sans-serif;
+  width: 300px;
+  height: 300px;
+  position: relative;
+  border-radius: 50% !important;
+  color: #fff;
+  border: solid 5px transparent;
+  background-image: linear-gradient(101deg, #c909f4, #0ff3a6),
+    linear-gradient(#c909f4, #0ff3a6);
+  background-origin: border-box;
+  background-clip: content-box, border-box;
+  box-shadow: 2px 1000px 1px #14131d inset;
+}
+
+#portfolio {
+  text-align: center;
+  padding-top: 5rem;
+  padding-bottom: 6rem;
+  background: #14131d;
+}

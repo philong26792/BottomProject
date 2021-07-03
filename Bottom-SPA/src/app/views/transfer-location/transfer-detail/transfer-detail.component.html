@@ -1,0 +1,66 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <strong>5.1 History - Detail</strong>
+          <button type="button" class="btn btn-sm btn-primary float-right" (click)="back()">
+            <i class="fa fa-chevron-left"></i> Back
+          </button>
+        </div>
+        <form class="form-horizontal">
+          <div class="card-body">
+            <div class="form-group row">
+              <label class="col-md-1 offset-md-1 col-form-label" for="Plan No"><strong class="float-right">Plan No
+                </strong></label>
+              <div class="col-md-2">
+                <input type="text" [value]="transactionMain.mO_No" name="mO_No" class="form-control" disabled>
+              </div>
+              <label class="col-md-1 col-form-label" for="Plan No"><strong>Batch </strong></label>
+              <div class="col-md-2">
+                <input type="text" [value]="transactionMain.mO_Seq" name="mO_No" class="form-control" disabled>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-1 offset-md-1 col-form-label" for="Material"><strong class="float-right">Material
+                </strong></label>
+              <div class="col-md-2">
+                <input type="text" [value]="transactionMain.material_ID" name="material_id" class="form-control"
+                  disabled>
+              </div>
+              <div class="col-md-8">
+                <input [value]="transactionMain.material_Name" type="text" disabled name="material_name"
+                  class="form-control">
+              </div>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-bordered text-center">
+                <tr>
+                  <td class="custom-thead" colspan="2">Tool Size</td>
+                  <td class="custom-background-print" *ngFor="let item of transferDetails">
+                    {{ item.tool_Size }}
+                  </td>
+                </tr>
+                <tr>
+                  <td class="custom-thead" colspan="2">
+                    PO#Size
+                  </td>
+                  <td *ngFor="let item of transferDetails">
+                    {{ item.order_Size }}
+                  </td>
+                </tr>
+                <tr>
+                  <td class="custom-thead">Trans Qty</td>
+                  <td>{{transferDetails | sumAttr: 'qty'}}</td>
+                  <td *ngFor="let item of transferDetails">
+                    {{ item.qty }}
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

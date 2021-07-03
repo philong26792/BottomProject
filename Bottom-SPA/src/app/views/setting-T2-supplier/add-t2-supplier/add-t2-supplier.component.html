@@ -1,0 +1,103 @@
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <strong>1.4 T2 Supplier - Add/Edit </strong>
+                    <button type="button" class="btn  btn-primary float-right"
+                        [routerLink]="['/rack/setting-t2-supplier/list-t2-supplier']"
+                        routerLinkActive="router-link-active">
+                        <i class="fa fa-chevron-left"></i>
+                        Back
+                    </button>
+                </div>
+                <form class="form-horizontal" #addSettingT2="ngForm">
+                    <div class="card-body">
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-lg-2 col-form-label "><strong class="float-right">
+                                    Factory
+                                </strong> </label>
+                            <div class="col-sm-2 col-lg-2">
+                                <ng-select2 [data]="listDataFactory" name="Factory" width="100%" [value]='factory'
+                                    (valueChanged)="changeFactory($event)" [disabled]="check"></ng-select2>
+                            </div>
+                            <label class="col-md-3 col-form-label" for="fromDate"><strong class="float-right">T2
+                                    Supplier
+                                </strong></label>
+                            <div class="col-md-2">
+                                <ng-select2 [data]="supplierIDList" [options]="optionsSelectSupplierID"
+                                    (valueChanged)="changedSupplierID($event)" [value]="t2.t2_Supplier_ID">
+                                </ng-select2>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-lg-2-form-label "><strong class=" float-right">Input Delivery
+                                    No</strong></label>
+                            <div class="custom-control custom-checkbox col-sm-2 col-lg-2 ml-3">
+                                <input type="checkbox" [ngModel]="input_delivery" (change)="inputChange()"
+                                    name="is_active" id="is_active" class="custom-control-input" />
+                                <label class="custom-control-label" for="is_active"></label>
+                            </div>
+                            <label class="col-sm-3 col-lg-3 col-form-label "><strong class=" float-right">T2 Supplier
+                                    Name</strong></label>
+                            <input type="text" [ngModel]='t2.t2_Supplier_Name' name="supplier_name"
+                                class="col-sm-2 col-lg-2 form-control" id="supplier_name" disabled>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-lg-2-form-label "><strong class=" float-right">Reason
+                                    Code</strong></label>
+                            <div class="col-sm-2 col-lg-2">
+                                <ng-select2 [data]="listReason" name="Reason" width="100%"
+                                    [options]="optionsSelectReasonCode" (valueChanged)="changeReasonCode($event)">
+                                </ng-select2>
+                            </div>
+                            <div class="col-sm-3 col-lg-2">
+                                <button type="button" class="btn btn-success btn-block" (click)="Add()"><i
+                                        class="fa fa-plus"></i>
+                                    Add</button>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-6 col-lg-6">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Reason Code</th>
+                                            <th>Reason Name</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let item of t2.reasons">
+                                            <td>{{item.reason_Code}}</td>
+                                            <td>{{item.reason_Name}}</td>
+                                            <td><button class="btn btn-danger ml-2" (click)="delete(item)">
+                                                    <i class="fa fa-trash"></i>
+                                                    Delete
+                                                </button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="form-group row">
+                            <div class="col">
+                                <button type="button" class="btn btn-danger mr-1" (click)="cancel()">
+                                    <i class="fa fa-ban"></i>
+                                    Cancel
+                                </button>
+                                <button type="button" class="btn btn-success mr-1" (click)="save()"
+                                    [disabled]="!addSettingT2.valid">
+                                    <i class="fa fa-check"></i>
+                                    Save
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,18 @@
+.rack-location {
+  font-size: 20px;
+}
+
+.qr-el {
+  padding-bottom: 40px;
+}
+
+@media print {
+
+  .print-all {
+    height:100%; 
+    margin: 0 !important; 
+    padding: 0 !important;
+    overflow: hidden;
+  }
+
+}

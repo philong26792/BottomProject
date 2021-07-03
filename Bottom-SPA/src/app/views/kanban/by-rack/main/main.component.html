@@ -1,0 +1,28 @@
+<div class="app-body">
+  <main class="main">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-8 pt-3">
+          <strong class="text title">By Racks Area</strong>
+        </div>
+        <div class="col-4 mt-3 mb-3">
+          <a href="javascript:;" class="btn btn-back btn-dark float-right" [routerLink]="['/kanban/']">
+            <span>
+              <i class="fa fa-chevron-left"></i>
+              <span> Back</span>
+            </span>
+          </a>
+          <span class="text-white float-right mr-3 time mt-1">{{time | date : 'yyyy/MM/dd hh:mm:ss a'}}</span>
+        </div>
+      </div>
+      <div class="line-gradient mb-4"></div>
+      <ul class="row">
+        <li class="col-6 col-md-3" *ngFor="let item of racks">
+          <a href="javascript:;" class="btn form-control btn-category d-flex justify-content-center align-items-center" (click)="detail(item.build_ID)"> {{item.build_Name}}({{item.stk_Qty}})</a>
+        </li>
+      </ul>
+    </div>
+  </main>
+</div>
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "ball-clip-rotate" [fullScreen] = "true"></ngx-spinner>
+

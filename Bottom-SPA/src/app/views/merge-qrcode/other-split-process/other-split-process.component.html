@@ -1,0 +1,174 @@
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <strong>2.9.3 Offset A ->b1,b2… - Process</strong>
+                    <button type="button" 
+                        class="btn btn-sm btn-primary float-right"
+                        [routerLink]="['/merge-qrcode/other-split/detail', transacNo]">
+                        <i class="fa fa-chevron-left"></i> Back
+                    </button>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <label class="col-md-1 col-form-label" for="qrCodeId">
+                            <strong class="float-right">QRCode_ID</strong>
+                        </label>
+                        <div class="col-md-2">
+                            <input type="text"
+                                name="qrCodeId"  
+                                disabled
+                                class="form-control"
+                                [value]="splitProccess.transacMainMergeQrCode.qrCode_ID">
+                        </div>
+                        <label class="col-md-1 col-form-label" for="mO_No">
+                            <strong class="float-right">Plan No</strong></label>
+                        <div class="col-md-2">
+                            <input type="text" 
+                                disabled
+                                name="mO_No" 
+                                class="form-control"
+                                [value]="splitProccess.transacMainMergeQrCode.mO_No">
+                        </div>
+                        <label class="col-md-1 col-form-label" for="modelNo">
+                            <strong class="float-right">Model No</strong>
+                        </label>
+                        <div class="col-md-2">
+                            <input type="text" 
+                                disabled 
+                                name="model_No" 
+                                class="form-control"
+                                [value]="splitProccess.transacMainMergeQrCode.model_No + ' - ' + splitProccess.transacMainMergeQrCode.model_Name">
+                        </div>
+                        <label class="col-md-1 col-form-label" for="article">
+                            <strong class="float-right">Article</strong>
+                        </label>
+                        <div class="col-md-2">
+                            <input type="text" 
+                                disabled
+                                name="article" 
+                                class="form-control"
+                                [value]="splitProccess.transacMainMergeQrCode.article">
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <label class="col-md-1 col-form-label" for="material">
+                            <strong class="float-right">Material</strong>
+                        </label>
+                        <div class="col-md-11">
+                            <input type="text" 
+                                name="material" 
+                                disabled 
+                                class="form-control"
+                                [value]="splitProccess.transacMainMergeQrCode.material_ID + ' - ' + splitProccess.transacMainMergeQrCode.material_Name">
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <label class="col-md-2 col-form-label offset-md-5" for="po">
+                            <strong class="float-right">New PO</strong>
+                        </label>
+                        <div class="col-md-2">
+                            <input type="text" 
+                                name="po" 
+                                class="form-control"
+                                placeholder="Enter Plan No .."
+                                [(ngModel)]="newMoNo">
+                        </div>
+                        <div class="col-md-1">
+                            <input type="text" 
+                                name="po" 
+                                class="form-control"
+                                placeholder="Batch .."
+                                [(ngModel)]="moSeq">
+                        </div>
+                        <div class="col-md-2">
+                            <button class="btn btn btn-success" (click)="add()">
+                                <i class="fa fa-plus"></i> Add
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-10 offset-md-1 table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <td>Tool Size</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td *ngFor="let item of splitProccess.listSizeAndQty">{{item.tool_Size}}</td>
+                                </tr>
+                                <tr>
+                                    <td>PO Size</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td *ngFor="let item of splitProccess.listSizeAndQty">{{item.model_Size}}</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Original Stock Qty</td>
+                                    <td></td>
+                                    <td>{{splitProccess.listSizeAndQty | sumAttr: 'instock_Qty'}}</td>
+                                    <td *ngFor="let item of splitProccess.listSizeAndQty">{{item.instock_Qty}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Accumlated Out Qty</td>
+                                    <td></td>
+                                    <td>{{totalAccumlatedOutQty}}</td>
+                                    <td *ngFor="let item of splitProccess.listSizeAndQty">{{item.act_Out_Qty}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Remaining Stock Qty</td>
+                                    <td></td>
+                                    <td>{{totalRemainingQty}}</td>
+                                    <td *ngFor="let item of splitProccess.listSizeAndQty">{{item.instock_Qty - item.act_Out_Qty}}</td>
+                                </tr>
+                                <tr *ngFor="let item of listSplitDataByOffset; let i = index">
+                                    <td class="text-center align-middle">
+                                        <div style="display: flex">
+                                            <button class="btn btn-danger mr-1" (click)="deleteItemDateSplitByOffset(i)"><i class="fa fa-close"></i></button>
+                                            <button class="btn btn-success">{{item.mO_No}} {{item.mO_Seq}}</button>
+                                        </div>
+                                    </td>
+                                    <td class="align-middle">
+                                        <input type="text" 
+                                        name="rack-location + {{i}}"
+                                        [(ngModel)]="item.rack_Location"
+                                        style="width: 100px !important;"
+                                        appUpercaseAuto
+                                        (mouseleave)="checkRackExist(item)"
+                                        placeholder="Enter Rack...">
+                                    </td>
+                                    <td class="align-middle">{{item.sumInstockQty}}</td>
+                                    <td *ngFor="let item1 of item.listSizeAndQty; let y = index" class="text-center align-middle">
+                                        <span class="bg-dark pl-2 pr-2">{{item1.purchase_Qty}}</span> <br>
+                                        <input type="number"
+                                            style="width: 60px !important;" 
+                                            min="0"
+                                            name="{{item1.order_Size + i}}" 
+                                            id="{{item1.order_Size + i}}"
+                                            [(ngModel)]="item1.instock_Qty"
+                                            [tooltip]="item1.purchase_Qty"
+                                            (ngModelChange)="changeInput($event , i , y, item)"
+                                            [disabled]="item1.instock_QtyDb == null"
+                                            class="text-center">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card-footer" *ngIf="listSplitDataByOffset.length > 0">
+                    <button class="btn btn-danger mr-2">
+                      <i class="fa fa-ban"></i> Cancel
+                    </button>
+                    <button class="btn btn-success mr-2" (click)="submit()">
+                      <i class="fa fa-check"></i> Submit
+                    </button>
+                  </div>
+            </div>
+        </div>
+    </div>
+</div>

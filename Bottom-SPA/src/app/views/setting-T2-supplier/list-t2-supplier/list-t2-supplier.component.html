@@ -1,0 +1,120 @@
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <strong>1.4 Setting T2 Supplier</strong>
+                </div>
+                <form class="form-horizontal" #addAuditTypeForm="ngForm">
+                    <div class="card-body">
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label" for="fromDate"><strong class="float-right">Factory
+                                </strong></label>
+                            <div class="col-md-2">
+                                <ng-select2 [disabled]="true" [data]='listFactory' [value]='factory'
+                                    (valueChanged)='changeFactory($event)' width="100%"></ng-select2>
+                            </div>
+                            <label class="col-md-2 col-form-label" for="fromDate"><strong class="float-right">Reason
+                                    Code
+                                </strong></label>
+                            <div class="col-md-2">
+                                <ng-select2 [data]="listReason" name="Reason" width="100%"
+                                    [options]="optionsSelectReasonCode" (valueChanged)="changeReason($event)"
+                                    [(ngModel)]="params.reason_code">
+                                </ng-select2>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label" for="fromDate"><strong class="float-right">T2
+                                    Supplier
+                                </strong></label>
+                            <div class="col-md-2">
+                                <ng-select2 [data]="supplierIDList" [options]="optionsSelectSupplierID"
+                                    (valueChanged)="changedSupplierID($event)" [value]="params.supplier_id">
+                                </ng-select2>
+                            </div>
+                            <label class="col-md-2 col-form-label" for="fromDate"><strong class="float-right">Input
+                                    Delivery No
+                                </strong></label>
+                            <div class="col-md-2">
+                                <select class="form-control" id="inputDelivery" name="inputDelivery"
+                                    [(ngModel)]="params.input_delivery" (change)="changeInput($event)">
+                                    <option value="">All</option>
+                                    <option value="Y">Yes</option>
+                                    <option value="N">No</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2 offset-md-1">
+                                <button type="button" class="btn btn-success btn-block"
+                                    (click)="AddorEdit(null,false)"><i class="fa fa-plus"></i>
+                                    Add</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive ">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Supplier No</th>
+                                    <th>Supplier Name</th>
+                                    <th>Input Delivery No</th>
+                                    <th>Reason Code</th>
+                                    <th>Reason English Name</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <ng-container *ngFor="let item of  listT2supplier let i = index" [attr.data-index]="i">
+                                    <tr>
+                                        <td [attr.rowspan]="item.reasons.length" class="font-table align-middle arow">
+                                            {{i +
+                                            1}}</td>
+                                        <td>{{item.t2_Supplier_ID}}</td>
+                                        <td>{{item.t2_Supplier_Name}}</td>
+                                        <td>{{item.input_Delivery}}</td>
+                                        <td>{{item.reasons[0].reason_Code}}</td>
+                                        <td>{{item.reasons[0].reason_Name}}</td>
+                                        <td [attr.rowspan]="item.reasons.length" class="font-table align-middle arow"
+                                            style='white-space: nowrap'>
+                                            <button class="btn btn-primary" (click)="AddorEdit(item,true)">
+                                                <i class="fa fa-pencil"></i>
+                                                Edit
+                                            </button>
+                                            <button class="btn btn-danger ml-2" (click)="delete(item)">
+                                                <i class="fa fa-trash"></i>
+                                                Delete
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr *ngFor="let item1 of item.reasons.slice(1)">
+                                        <td>{{item.t2_Supplier_ID}}</td>
+                                        <td>{{item.t2_Supplier_Name}}</td>
+                                        <td>{{item.input_Delivery}}</td>
+                                        <td>{{item1.reason_Code}}</td>
+                                        <td>{{item1.reason_Name}}</td>
+                                    </tr>
+                                </ng-container>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="d-flex" *ngIf="listT2supplier.length >= 1">
+                        <pagination [totalItems]="pagination.totalItems" [(ngModel)]="pagination.currentPage"
+                            [boundaryLinks]="true" [itemsPerPage]="pagination.itemsPerPage"
+                            (pageChanged)="pageChanged($event)" previousText="&lsaquo;" nextText="&rsaquo;"
+                            firstText="&laquo;" lastText="&raquo;" [maxSize]=5>
+                        </pagination>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

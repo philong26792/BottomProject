@@ -1,0 +1,64 @@
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <strong>2.8 Stock Adj. - List QrCode Change</strong>
+                    <button type="button" class="btn btn-sm btn-primary float-right" [routerLink]="'/modify-store/main'">
+                        <i class="fa fa-chevron-left"></i> Back
+                    </button>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr class="tr-content">
+                                    <td>Plan No</td>
+                                    <td>Batch</td>
+                                    <td>Actual QrCode Qty</td>
+                                    <td>Modify Qty</td>
+                                    <td>Modify Time</td>
+                                    <td>Modify QrCodeID</td>
+                                    <td>Update By</td>
+                                    <td>Type</td>
+                                    <td></td>
+                                </tr>
+                            </thead>
+                            <tbody *ngIf="modifyQrCodeList.length > 0">
+                                <ng-container *ngFor="let item of modifyQrCodeList">
+                                    <tr class="tr-content">
+                                        <td  class="text-center vertical-middle" rowspan="2">{{item.mO_No}}</td>
+                                        <td>{{item.mO_Seq}}</td>
+                                        <td>{{item.actual_Qty}}</td>
+                                        <td>{{item.modify_Qty}}</td>
+                                        <td>{{item.modify_Time | date: 'MM/dd/yyyy, HH:mm:ss'}}</td>
+                                        <td>{{item.qrCode_ID}}</td>
+                                        <td>{{item.update_By}}</td>
+                                        <td rowspan="2">{{otherType}}</td>
+                                        <td><button (click)="printQrCode(item)" class="btn btn-primary td-button">QrCode</button></td>
+                                    </tr>
+                                    <tr class="tr-content">
+                                        <td colspan="6">{{item.material_ID}} - {{item.material_Name}}</td>
+                                        <td style="border-top-style: hidden;">
+                                            <button (click)="detailQrCode(item)" class="btn btn-warning td-button">Detail</button>
+                                        </td>
+                                    </tr>
+                                </ng-container>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button type="button" (click)="cancel()" class="btn btn-danger mr-1"><i class="fa fa-ban"></i> Cancel</button>
+                    <button type="button" (click)="printAll()"  class="btn btn-success mr-1">
+                        <i class="fa fa-check"></i> Print QRCode</button>
+                    <button type="button"
+                        (click)="printMissing()"
+                        class="btn btn-primary">
+                        <i class="fa fa-check"></i> Missing Form
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

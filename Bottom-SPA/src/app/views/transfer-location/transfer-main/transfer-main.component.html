@@ -1,0 +1,112 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <strong>2.7 Transfer Location</strong>
+        </div>
+        <form class="form-horizontal">
+          <div class="card-body">
+            <div class="form-group row">
+              <div class="col-md-3">
+                <label>To Location:</label>
+                <div class="input-group">
+                  <span class="input-group-prepend">
+                    <button class="btn btn-primary" type="button" disabled>
+                      SCAN
+                    </button>
+                  </span>
+                  <input type="text" id="toLocation" (keyup)="uppercase()" (keyup.enter)="enter()" (focusout)="checkExistLocation()"  placeholder="To Location" class="form-control" name="toLocation"
+                    [(ngModel)]="toLocation" [disabled]="flagSubmit" />
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-md-3">
+                <label> QrCode:</label>
+                <div class="input-group">
+                  <span class="input-group-prepend">
+                    <button class="btn btn-primary" type="button" disabled>
+                      SCAN
+                    </button>
+                  </span>
+                  <input type="text" 
+                    id="qrCodeId" 
+                    placeholder="QRCode" 
+                    name="qrCodeId" 
+                    class="form-control"
+                    [formControl]="scanQrcode"/>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <strong>TRANSFER FROM SCAN QR</strong>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-bordered text-center">
+              <thead>
+                <tr>
+                  <th>SEQ</th>
+                  <th>Transfer No</th>
+                  <th>QRcode Id</th>
+                  <th>Plan No</th>
+                  <th>Batch</th>
+                  <th>Model</th>
+                  <th>Article</th>
+                  <th>Parts</th>
+                  <th>Qty</th>
+                  <th>From Location</th>
+                  <th>To Location</th>
+                  <th *ngIf="!flagSubmit">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <ng-container *ngFor="let item of transfers; let i = index">
+                <tr>
+                  <td rowspan="2">{{ i + 1 }}</td>
+                  <td>{{ item.transferNo }}</td>
+                  <td>{{ item.qrCodeId }}</td>
+                  <td>{{ item.planNo }}</td>
+                  <td>{{ item.batch }}</td>
+                  <td>{{ item.modelNo }} - {{item.modelName}}</td>
+                  <td>{{ item.article }}</td>
+                  <td>{{ item.custmoerPart }} - {{item.custmoerName}}</td>
+                  <td>{{ item.qty }}</td>
+                  <td>{{ item.fromLocation }}</td>
+                  <td>{{ item.toLocation }}</td>
+                  <td *ngIf="!flagSubmit" rowspan="2">
+                    <button class="btn btn-danger" (click)="remove(item.qrCodeId)">
+                      <i class="fa fa-trash"></i> Delete
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="10">{{ item.matId }} - {{ item.matName }}</td>
+                </tr>
+              </ng-container>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card-footer">
+          <button class="btn btn-danger mr-2" (click)="clear()">
+            <i class="fa fa-ban"></i> Clear
+          </button>
+          <button class="btn btn-success mr-2" (click)="submitMain()" [disabled]="flagSubmit" *ngIf="transfers.length > 0">
+            <i class="fa fa-check"></i> Submit
+          </button>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

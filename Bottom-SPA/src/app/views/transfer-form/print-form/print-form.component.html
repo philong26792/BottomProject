@@ -1,0 +1,132 @@
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <button type="button" class="btn btn-primary btn-print" ngxPrint printSectionId="print"
+                        [useExistingCss]="true">
+                        <i class="fa fa-print"></i> Print
+                    </button>
+                    <button type="button" (click)="back()" [routerLink]="['/input/transfer-form/print']"
+                        class="btn btn-sm btn-primary float-right">
+                        <i class="fa fa-chevron-left"></i> Back
+                    </button>
+                </div>
+                <div class="card-body" id="print">
+                    <ng-container *ngFor="let item of transferFormPrintDetail; let i = index">
+                        <span class="print-all" *ngIf="i%2==0"></span>
+                        <h1 class="text-center">Transfer Form</h1>
+                        <table class="table table-bordered mt-3 mb-0">
+                            <tr>
+                                <td><b>Trans_No</b></td>
+                                <td>{{item.collect_Trans_No}}</td>
+                                <td><b>ALS</b></td>
+                                <td>{{item.line_ASY}}</td>
+                                <td><b>Art#</b></td>
+                                <td>{{item.article}}</td>
+                                <td><b>STF</b></td>
+                                <td>{{item.line_STF}}</td>
+                                <td><b>Print_Date</b> {{ today | date: 'yyyy/MM/dd HH:mm:ss' }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>PO#_Batch</b></td>
+                                <td>{{item.mO_No}} {{item.mO_Seq}}</td>
+                                <td><b>Plan_Qty</b></td>
+                                <td>{{item.transferFormQty | sumAttr: "mO_Qty"}}</td>
+                                <td colspan="2"><b>Rack</b></td>
+                                <td colspan="2">{{item.rack_Location}}</td>
+                                <td rowspan="3" class="p-0 text-center">
+                                    <ngx-qrcode qrc-version="4" id="qrCodeImage" [qrc-element-type]="elementType"
+                                    [qrc-value]="item.collect_Trans_No">
+                                </ngx-qrcode>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><b>Model_Name</b></td>
+                                <td>{{item.model_Name}}</td>
+                                <td><b>Model_No</b></td>
+                                <td>{{item.model_No}}</td>
+                                <td colspan="2"><b>T2_Supplier</b></td>
+                                <td colspan="2">{{item.supplier_ID}} {{item.supplier_Name}}</td>
+                            </tr>
+                            <tr>
+                                <td><b>I.Part#</b></td>
+                                <td>{{item.custmoer_Part}} {{item.custmoer_Name}}</td>
+                                <td><b>Process</b></td>
+                                <td>{{item.subcon_ID}} {{item.subcon_Name}}</td>
+                                <td colspan="2"><b>T3_Supplier</b></td>
+                                <td colspan="2">{{item.t3_Supplier}} {{item.t3_Supplier_Name}}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Material_Name</b></td>
+                                <td colspan="8">{{item.material_ID}} {{item.material_Name}}</td>
+                            </tr>
+                        </table>
+                        <table class="table mb-0">
+                            <tr class="font-weight-bold">
+                                <td class="border-0"><b>PO Size</b></td>
+                                <td class="border-0" *ngFor="let itemPOSize of item.transferFormQty">
+                                    {{itemPOSize.order_Size}}
+                                </td>
+                                <td class="border-0"><b>Total</b></td>
+                            </tr>
+                            <tr class="font-weight-bold">
+                                <td class="border-0"><b>Tool Size</b></td>
+                                <td class="border-0" *ngFor="let itemPOSize of item.transferFormQty">
+                                    {{itemPOSize.tool_Size}}
+                                </td>
+                                <td class="border-0"></td>
+                            </tr>
+                            <tr>
+                                <td class="border-0"><b>Plan Qty</b></td>
+                                <td class="border-0" *ngFor="let itemPOSize of item.transferFormQty">
+                                    {{itemPOSize.mO_Qty}}
+                                </td>
+                                <td class="border-0">{{item.transferFormQty | sumAttr: "mO_Qty"}}</td>
+                            </tr>
+                            <tr>
+                                <td class="border-0"><b>Trans. Qty</b></td>
+                                <td class="border-0" *ngFor="let itemPOSize of item.transferFormQty">
+                                    {{itemPOSize.trans_Qty}}
+                                </td>
+                                <td class="border-0">{{item.transferFormQty | sumAttr: "trans_Qty"}}</td>
+                            </tr>
+                            <tr>
+                                <td class="border-0"><b>Acc. Qty</b></td>
+                                <td class="border-0" *ngFor="let itemPOSize of item.transferFormQty">
+                                    {{itemPOSize.act_Qty}}
+                                </td>
+                                <td class="border-0">{{item.transferFormQty | sumAttr: "act_Qty"}}</td>
+                            </tr>
+                            <tr>
+                                <td class="border-0"><b>Blance Qty</b></td>
+                                <td class="border-0" *ngFor="let itemPOSize of item.transferFormQty">
+                                    {{itemPOSize.mO_Qty - itemPOSize.trans_Qty}}
+                                </td>
+                                <td class="border-0">
+                                    {{(item.transferFormQty | sumAttr: "mO_Qty") - (item.transferFormQty | sumAttr: "trans_Qty")}}
+                                </td>
+                            </tr>
+                        </table>
+                        <table table class="table table-bordered">
+                            <tr>
+                                <td><b>Remark</b></td>
+                                <td colspan="3"></td>
+                            </tr>
+                            <tr class="font-weight-bold">
+                                <td class="text-danger bg-warning">CTN of Matl.</td>
+                                <td colspan="3"></td>
+                            </tr>
+                            <tr>
+                                <td>Suppervisor(In)</td>
+                                <td>Operator(In)</td>
+                                <td>Suppervisor(Out)</td>
+                                <td>Operator(Out)</td>
+                            </tr>
+                        </table>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

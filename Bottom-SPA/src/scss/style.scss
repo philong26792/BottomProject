@@ -1,0 +1,56 @@
+// If you want to override variables do it here
+@import "variables";
+
+// Import styles
+@import "~@coreui/coreui/scss/coreui";
+
+// If you want to add something do it here
+@import "custom";
+
+@import "../../node_modules/@ng-select/ng-select/themes/default.theme.css";
+@import "../../node_modules/ngx-bootstrap/datepicker/bs-datepicker.css";
+
+.mr-30 {
+  margin-right: 30px !important;
+}
+
+thead {
+  background-color: #20a8d8;
+  color: #fff;
+}
+
+.navbar {
+  background-color: #364150;
+}
+
+.vertical-middle {
+  vertical-align: middle !important;
+}
+
+.txt-brand {
+  font-size: 1rem;
+  font-weight: 600;
+  background-color: #14131d !important;
+  color: #fff !important;
+}
+// --------------------------------CSS KANBAN-------------------------------------//
+.template-fix1 {
+  background-color: #14131d !important;
+  color: white;
+}
+.kanban_detail_header {
+  color: #fff !important;
+  font-size: 28px !important;
+  display: table-cell;
+  vertical-align: middle;
+  font-weight: 500;
+}
+.alert-table {
+  background-color: #ffc241;
+  border-color: #ffbd31;
+  text-align: center;
+  text-transform: uppercase;
+  color: #343a40;
+  font-weight: bold;
+  margin-bottom: 0;
+}

@@ -1,0 +1,176 @@
+<div class="app-body">
+  <main class="main">
+    <div class="container-fluid animated fadeIn">
+      <div class="row">
+        <div class="col-8 pt-3">
+          <strong class="text title">By PO</strong>
+        </div>
+        <div class="col-4 mt-3 mb-3">
+          <a href="javascript:;" class="btn btn-back btn-dark float-right" (click)="back()">
+            <span>
+              <i class="fa fa-chevron-left"></i>
+              <span> Back</span>
+            </span>
+          </a>
+          <span class="text-white float-right mr-3 time mt-1">{{time | date : 'yyyy/MM/dd hh:mm:ss a'}}</span>
+        </div>
+      </div>
+      <div class="line-gradient mb-4"></div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <form class="form-horizontal">
+              <div class="card-body template-fix1">
+                <div class="form-group row">
+                  <div class="col-md-2">
+                    <label class="badge badge-warning">Date Type</label>
+                    <select name="dateType" id="" class="form-control" [(ngModel)]="dateType">
+                      <option value="1">Plan Start STF Date</option>
+                      <option value="2">Production Start Date</option>
+                      <option value="3">Expected Delivery Date</option>
+                    </select>
+                  </div>
+                  <div class="col-md-2">
+                    <label class="badge badge-warning">From Date</label>
+                    <div class="input-group">
+                      <input type="text" placeholder="Start" id="fromDate" class="form-control" bsDatepicker
+                        name="time_start" [bsConfig]="bsConfig" [(ngModel)]="dateStart" [bsValue]="null">
+                      <span class="input-group-append">
+                        <button class="btn btn-primary" type="button" disabled><i class="fa fa-calendar"></i></button>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="col-md-2">
+                    <label class="badge badge-warning">To Date</label>
+                    <div class="input-group">
+                      <input type="text" placeholder="End" id="fromDate" class="form-control" bsDatepicker
+                        name="time_end" [bsConfig]="bsConfig" [(ngModel)]="dateEnd" [bsValue]="null">
+                      <span class="input-group-append">
+                        <button class="btn btn-primary" type="button" disabled><i class="fa fa-calendar"></i></button>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="col-md-2">
+                    <label class="badge badge-warning">Cell</label>
+                    <select name="line" id="" class="form-control" [(ngModel)]="line">
+                      <option value="{{item.id}}" *ngFor="let item of listLine">{{item.text}}</option>
+                    </select>
+                  </div>
+                  <div class="col-md-2">
+                    <label class="badge badge-warning">PO</label>
+                    <input type="text" placeholder="PO" name="moNo" class="form-control" [(ngModel)]="moNo">
+                  </div>
+                  <div class="col-md-2">
+                    <label class="badge badge-warning">Supplier</label>
+                    <ng-select2 [data]="supplierList"
+                    [options]="optionsSelectSupplier"
+                    (valueChanged)="changedSupplier($event)"
+                    [cssImport] = true
+                    [disabled]="disable"
+                    [value]="supplier"
+                    ></ng-select2>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-md-2">
+                    <label class="badge badge-warning">Article</label>
+                    <input type="text" placeholder="ART#" name="Art" class="form-control" [(ngModel)]="article">
+                  </div>
+                  <div class="col-md-2">
+                    <label class="badge badge-warning">Model Name</label>
+                    <input type="text" placeholder="Model Name" name="modelName" class="form-control" [(ngModel)]="modelName">
+                  </div>
+                  <div class="col-md-2">
+                    <label class="badge badge-warning">Kind</label>
+                    <select name="kind" id="" class="form-control" [(ngModel)]="kind">
+                      <option value="0">Summary Report</option>
+                      <option value="1">Detail Report</option>
+                    </select>
+                  </div>
+                  <div class="col-md-2"  >
+                    <label class="badge" style="color: #14131d;">Search</label>
+                    <button type="button" class="btn btn-primary btn-block" (click)="search()">
+                      <i class="fa fa-search"></i>
+                      Search
+                    </button>
+                  </div>
+                  <div class="col-md-2" style="padding-top: 35px;">
+                    <button type="button" class="btn btn-success btn-block" (click)="exportExcel()">
+                      <i class="fa fa-file-excel-o"></i>
+                      Excel
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="card table-responsive">
+            <table class="table table-bordered template-fix1">
+              <thead>
+                <tr>
+                  <th>STF Date</th>
+                  <th>PO Status</th>
+                  <th>Prod. Status</th>
+                  <th>Cell</th>
+                  <th>PO+BATCH</th>
+                  <th>Model Name</th>
+                  <th>ART#</th>
+                  <th class="text-right">Plan Qty</th>
+                  <th>Status</th>
+                  <th class="text-right">Rev.Prs</th>
+                  <th class="text-right">Stk Prs</th>
+                  <th>Balance</th>
+                </tr>
+              </thead>
+              <tbody class="template-fix1">
+                <tr *ngFor="let item of listKanbanByPo">
+                  <td>{{item.date | date: 'yyyy/MM/dd'}}</td>
+                  <td>
+                    {{item.order_Status == 'D' ? 'Split' 
+                      : item.order_Status == 'C' ? 'Cancel' 
+                      : item.order_Status == 'Y' ? 'Close' 
+                      : item.order_Status == 'P' ? 'Partial' 
+                      : 'Unship'}}
+                  </td>
+                  <td>{{item.prod_Status}}</td>
+                  <td>{{item.cell}}</td>
+                  <td>{{item.mO_No}} {{item.mO_Seq}}</td>
+                  <td>{{item.model_Name}}</td>
+                  <td>{{item.article}}</td>
+                  <td class="text-right">{{item.prs}}</td>
+                  <td *ngIf="item.prs === null; else elseStatus">0%</td>
+                  <ng-template #elseStatus>
+                    <td>{{(item.rev_Qty/(item.prs == 0 ? 1 : item.prs)) * 100 | number : '1.0-0'}} %</td>
+                  </ng-template>
+                  <td class="text-right">{{item.rev_Qty}}</td>
+                  <td class="text-right">{{item.stk_Qty}}</td>
+                  <td><a (click)="detail(item)" href="javascript:;" style="text-decoration: underline">Detail</a></td>
+                </tr>
+                <tr *ngIf="nodata">
+                  <td colspan="12">
+                    <div class="alert-table alert alert-waring ">
+                      No data found !
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="d-flex" *ngIf="pagination.totalPages > 1">
+            <pagination [boundaryLinks]="true" [totalItems]="pagination.totalItems" [(ngModel)]="pagination.currentPage"
+              [itemsPerPage]="pagination.itemsPerPage" (pageChanged)="pageChanged($event)" previousText="&lsaquo;"
+              nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;" [maxSize]="5">
+            </pagination>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="ball-clip-rotate" [fullScreen]="true">
+</ngx-spinner>

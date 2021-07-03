@@ -1,0 +1,68 @@
+.app-body {
+  background-color: #000 !important;
+  height: 100vh;
+  font-family: Century Gothic Regular, sans-serif;
+  font-size: 20px;
+}
+@media (max-width: 991.98px) {
+  .app-body {
+    margin-top: 0px;
+  }
+}
+
+#container {
+  background-color: #14131d;
+  height: 100vh;
+}
+
+.header {
+  padding: 20px 0 5px 0;
+}
+
+.time {
+  font-size: x-large;
+}
+
+
+.title {
+  color: #fff;
+  font-size: xx-large;
+}
+
+.btn-back {
+  color: #fff;
+    border: 2px solid;
+    border-image-source: linear-gradient(to bottom,  #c909f4, #0ff3a6) !important;
+    border-image-slice: 1;
+    background: #14131d;
+}
+
+.line-gradient  {
+  height: 2px;
+  background-image: linear-gradient( to top right, #0ff3a6, #c909f4 );
+}
+
+.table-dark {
+  padding-left: 15px;
+  background-color: #282849;
+}
+
+.btn-excel {
+  font-size: 1.2rem;
+}
+
+.txt-brand {
+  font-size: 1.2rem;
+}
+
+.card.table-responsive {
+  overflow-y: hidden;
+}
+
+
+
+
+
+
+
+
